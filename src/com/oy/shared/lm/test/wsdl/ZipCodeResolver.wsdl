@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:s="http://www.w3.org/2001/XMLSchema"
+	xmlns:s0="http://webservices.eraserver.net/"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	targetNamespace="http://webservices.eraserver.net/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+	<types>
+		<s:schema elementFormDefault="qualified"
+			targetNamespace="http://webservices.eraserver.net/">
+			<s:element name="FullZipCode">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="accessCode" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="address" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="city" type="s:string" />
+
+						<s:element minOccurs="0" maxOccurs="1"
+							name="state" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="FullZipCodeResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="FullZipCodeResult" type="s:string" />
+					</s:sequence>
+
+				</s:complexType>
+			</s:element>
+			<s:element name="ShortZipCode">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="accessCode" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="address" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="city" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="state" type="s:string" />
+
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="ShortZipCodeResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="ShortZipCodeResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+
+			</s:element>
+			<s:element name="CorrectedAddressHtml">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="accessCode" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="address" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="city" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="state" type="s:string" />
+					</s:sequence>
+
+				</s:complexType>
+			</s:element>
+			<s:element name="CorrectedAddressHtmlResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="CorrectedAddressHtmlResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+
+			<s:element name="CorrectedAddressXml">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="accessCode" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="address" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="city" type="s:string" />
+						<s:element minOccurs="0" maxOccurs="1"
+							name="state" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+
+			</s:element>
+			<s:element name="CorrectedAddressXmlResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="1" maxOccurs="1"
+							name="CorrectedAddressXmlResult" type="s0:USPSAddress" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:complexType name="USPSAddress">
+
+				<s:sequence>
+					<s:element minOccurs="0" maxOccurs="1" name="Street"
+						type="s:string" />
+					<s:element minOccurs="0" maxOccurs="1" name="City"
+						type="s:string" />
+					<s:element minOccurs="0" maxOccurs="1" name="State"
+						type="s:string" />
+					<s:element minOccurs="0" maxOccurs="1"
+						name="ShortZIP" type="s:string" />
+					<s:element minOccurs="0" maxOccurs="1"
+						name="FullZIP" type="s:string" />
+				</s:sequence>
+			</s:complexType>
+			<s:element name="VersionInfo">
+
+				<s:complexType />
+			</s:element>
+			<s:element name="VersionInfoResponse">
+				<s:complexType>
+					<s:sequence>
+						<s:element minOccurs="0" maxOccurs="1"
+							name="VersionInfoResult" type="s:string" />
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+
+			<s:element name="string" nillable="true" type="s:string" />
+			<s:element name="USPSAddress" type="s0:USPSAddress" />
+		</s:schema>
+	</types>
+	<message name="FullZipCodeSoapIn">
+		<part name="parameters" element="s0:FullZipCode" />
+	</message>
+	<message name="FullZipCodeSoapOut">
+		<part name="parameters" element="s0:FullZipCodeResponse" />
+
+	</message>
+	<message name="ShortZipCodeSoapIn">
+		<part name="parameters" element="s0:ShortZipCode" />
+	</message>
+	<message name="ShortZipCodeSoapOut">
+		<part name="parameters" element="s0:ShortZipCodeResponse" />
+	</message>
+	<message name="CorrectedAddressHtmlSoapIn">
+		<part name="parameters" element="s0:CorrectedAddressHtml" />
+
+	</message>
+	<message name="CorrectedAddressHtmlSoapOut">
+		<part name="parameters"
+			element="s0:CorrectedAddressHtmlResponse" />
+	</message>
+	<message name="CorrectedAddressXmlSoapIn">
+		<part name="parameters" element="s0:CorrectedAddressXml" />
+	</message>
+	<message name="CorrectedAddressXmlSoapOut">
+		<part name="parameters"
+			element="s0:CorrectedAddressXmlResponse" />
+
+	</message>
+	<message name="VersionInfoSoapIn">
+		<part name="parameters" element="s0:VersionInfo" />
+	</message>
+	<message name="VersionInfoSoapOut">
+		<part name="parameters" element="s0:VersionInfoResponse" />
+	</message>
+	<message name="FullZipCodeHttpGetIn">
+		<part name="accessCode" type="s:string" />
+
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="FullZipCodeHttpGetOut">
+		<part name="Body" element="s0:string" />
+	</message>
+	<message name="ShortZipCodeHttpGetIn">
+		<part name="accessCode" type="s:string" />
+
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="ShortZipCodeHttpGetOut">
+		<part name="Body" element="s0:string" />
+	</message>
+	<message name="CorrectedAddressHtmlHttpGetIn">
+		<part name="accessCode" type="s:string" />
+
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="CorrectedAddressHtmlHttpGetOut">
+		<part name="Body" element="s0:string" />
+	</message>
+	<message name="CorrectedAddressXmlHttpGetIn">
+		<part name="accessCode" type="s:string" />
+
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="CorrectedAddressXmlHttpGetOut">
+		<part name="Body" element="s0:USPSAddress" />
+	</message>
+	<message name="VersionInfoHttpGetIn" />
+	<message name="VersionInfoHttpGetOut">
+
+		<part name="Body" element="s0:string" />
+	</message>
+	<message name="FullZipCodeHttpPostIn">
+		<part name="accessCode" type="s:string" />
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="FullZipCodeHttpPostOut">
+
+		<part name="Body" element="s0:string" />
+	</message>
+	<message name="ShortZipCodeHttpPostIn">
+		<part name="accessCode" type="s:string" />
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="ShortZipCodeHttpPostOut">
+
+		<part name="Body" element="s0:string" />
+	</message>
+	<message name="CorrectedAddressHtmlHttpPostIn">
+		<part name="accessCode" type="s:string" />
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="CorrectedAddressHtmlHttpPostOut">
+
+		<part name="Body" element="s0:string" />
+	</message>
+	<message name="CorrectedAddressXmlHttpPostIn">
+		<part name="accessCode" type="s:string" />
+		<part name="address" type="s:string" />
+		<part name="city" type="s:string" />
+		<part name="state" type="s:string" />
+	</message>
+	<message name="CorrectedAddressXmlHttpPostOut">
+
+		<part name="Body" element="s0:USPSAddress" />
+	</message>
+	<message name="VersionInfoHttpPostIn" />
+	<message name="VersionInfoHttpPostOut">
+		<part name="Body" element="s0:string" />
+	</message>
+	<portType name="ZipCodeResolverSoap">
+		<operation name="FullZipCode">
+			<documentation>
+				Given a valid accesscode, street address, city, and
+				state, returns the ZIP code in NNNNN-NNNN format. If an
+				error occurs, returns 00000-0000 instead. Use accessCode
+				of '0' or '9999' for testing.
+			</documentation>
+
+			<input message="s0:FullZipCodeSoapIn" />
+			<output message="s0:FullZipCodeSoapOut" />
+		</operation>
+		<operation name="ShortZipCode">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				the ZIP code in NNNNN format. If an error occurs,
+				returns 00000 instead. Use accessCode of '0' or '9999'
+				for testing.
+			</documentation>
+			<input message="s0:ShortZipCodeSoapIn" />
+			<output message="s0:ShortZipCodeSoapOut" />
+		</operation>
+
+		<operation name="CorrectedAddressHtml">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				an HTML version of the USPS corrected address including
+				the ZIP Code in NNNNN-NNNN format. If an error occurs,
+				returns 'ERROR - unable to return corrected address'.
+				Use accessCode of '0' or '9999' for testing.
+			</documentation>
+			<input message="s0:CorrectedAddressHtmlSoapIn" />
+			<output message="s0:CorrectedAddressHtmlSoapOut" />
+		</operation>
+		<operation name="CorrectedAddressXml">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				an USPSADDRESS structure with STREET, CITY, STATE, and
+				SHORTZIP and FULLZIP elements. If an error occurs all
+				elements in the structure are empty. Use accessCode of
+				'0' or '9999' for testing.
+			</documentation>
+			<input message="s0:CorrectedAddressXmlSoapIn" />
+
+			<output message="s0:CorrectedAddressXmlSoapOut" />
+		</operation>
+		<operation name="VersionInfo">
+			<documentation>
+				Returns the web service name, current version, date and
+				copyright information.
+			</documentation>
+			<input message="s0:VersionInfoSoapIn" />
+			<output message="s0:VersionInfoSoapOut" />
+		</operation>
+	</portType>
+
+	<portType name="ZipCodeResolverHttpGet">
+		<operation name="FullZipCode">
+			<documentation>
+				Given a valid accesscode, street address, city, and
+				state, returns the ZIP code in NNNNN-NNNN format. If an
+				error occurs, returns 00000-0000 instead. Use accessCode
+				of '0' or '9999' for testing.
+			</documentation>
+			<input message="s0:FullZipCodeHttpGetIn" />
+			<output message="s0:FullZipCodeHttpGetOut" />
+		</operation>
+		<operation name="ShortZipCode">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				the ZIP code in NNNNN format. If an error occurs,
+				returns 00000 instead. Use accessCode of '0' or '9999'
+				for testing.
+			</documentation>
+
+			<input message="s0:ShortZipCodeHttpGetIn" />
+			<output message="s0:ShortZipCodeHttpGetOut" />
+		</operation>
+		<operation name="CorrectedAddressHtml">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				an HTML version of the USPS corrected address including
+				the ZIP Code in NNNNN-NNNN format. If an error occurs,
+				returns 'ERROR - unable to return corrected address'.
+				Use accessCode of '0' or '9999' for testing.
+			</documentation>
+			<input message="s0:CorrectedAddressHtmlHttpGetIn" />
+			<output message="s0:CorrectedAddressHtmlHttpGetOut" />
+		</operation>
+
+		<operation name="CorrectedAddressXml">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				an USPSADDRESS structure with STREET, CITY, STATE, and
+				SHORTZIP and FULLZIP elements. If an error occurs all
+				elements in the structure are empty. Use accessCode of
+				'0' or '9999' for testing.
+			</documentation>
+			<input message="s0:CorrectedAddressXmlHttpGetIn" />
+			<output message="s0:CorrectedAddressXmlHttpGetOut" />
+		</operation>
+		<operation name="VersionInfo">
+			<documentation>
+				Returns the web service name, current version, date and
+				copyright information.
+			</documentation>
+			<input message="s0:VersionInfoHttpGetIn" />
+
+			<output message="s0:VersionInfoHttpGetOut" />
+		</operation>
+	</portType>
+	<portType name="ZipCodeResolverHttpPost">
+		<operation name="FullZipCode">
+			<documentation>
+				Given a valid accesscode, street address, city, and
+				state, returns the ZIP code in NNNNN-NNNN format. If an
+				error occurs, returns 00000-0000 instead. Use accessCode
+				of '0' or '9999' for testing.
+			</documentation>
+			<input message="s0:FullZipCodeHttpPostIn" />
+			<output message="s0:FullZipCodeHttpPostOut" />
+
+		</operation>
+		<operation name="ShortZipCode">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				the ZIP code in NNNNN format. If an error occurs,
+				returns 00000 instead. Use accessCode of '0' or '9999'
+				for testing.
+			</documentation>
+			<input message="s0:ShortZipCodeHttpPostIn" />
+			<output message="s0:ShortZipCodeHttpPostOut" />
+		</operation>
+		<operation name="CorrectedAddressHtml">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				an HTML version of the USPS corrected address including
+				the ZIP Code in NNNNN-NNNN format. If an error occurs,
+				returns 'ERROR - unable to return corrected address'.
+				Use accessCode of '0' or '9999' for testing.
+			</documentation>
+
+			<input message="s0:CorrectedAddressHtmlHttpPostIn" />
+			<output message="s0:CorrectedAddressHtmlHttpPostOut" />
+		</operation>
+		<operation name="CorrectedAddressXml">
+			<documentation>
+				Given a valid street address, city, and state, returns
+				an USPSADDRESS structure with STREET, CITY, STATE, and
+				SHORTZIP and FULLZIP elements. If an error occurs all
+				elements in the structure are empty. Use accessCode of
+				'0' or '9999' for testing.
+			</documentation>
+			<input message="s0:CorrectedAddressXmlHttpPostIn" />
+			<output message="s0:CorrectedAddressXmlHttpPostOut" />
+		</operation>
+
+		<operation name="VersionInfo">
+			<documentation>
+				Returns the web service name, current version, date and
+				copyright information.
+			</documentation>
+			<input message="s0:VersionInfoHttpPostIn" />
+			<output message="s0:VersionInfoHttpPostOut" />
+		</operation>
+	</portType>
+	<binding name="ZipCodeResolverSoap" type="s0:ZipCodeResolverSoap">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document" />
+
+		<operation name="FullZipCode">
+			<soap:operation
+				soapAction="http://webservices.eraserver.net/FullZipCode"
+				style="document" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+
+		<operation name="ShortZipCode">
+			<soap:operation
+				soapAction="http://webservices.eraserver.net/ShortZipCode"
+				style="document" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+
+		<operation name="CorrectedAddressHtml">
+			<soap:operation
+				soapAction="http://webservices.eraserver.net/CorrectedAddressHtml"
+				style="document" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+
+		<operation name="CorrectedAddressXml">
+			<soap:operation
+				soapAction="http://webservices.eraserver.net/CorrectedAddressXml"
+				style="document" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+
+		<operation name="VersionInfo">
+			<soap:operation
+				soapAction="http://webservices.eraserver.net/VersionInfo"
+				style="document" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+
+	</binding>
+	<binding name="ZipCodeResolverHttpGet"
+		type="s0:ZipCodeResolverHttpGet">
+		<http:binding verb="GET" />
+		<operation name="FullZipCode">
+			<http:operation location="/FullZipCode" />
+			<input>
+				<http:urlEncoded />
+			</input>
+			<output>
+
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="ShortZipCode">
+			<http:operation location="/ShortZipCode" />
+			<input>
+				<http:urlEncoded />
+			</input>
+			<output>
+
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="CorrectedAddressHtml">
+			<http:operation location="/CorrectedAddressHtml" />
+			<input>
+				<http:urlEncoded />
+			</input>
+			<output>
+
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="CorrectedAddressXml">
+			<http:operation location="/CorrectedAddressXml" />
+			<input>
+				<http:urlEncoded />
+			</input>
+			<output>
+
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="VersionInfo">
+			<http:operation location="/VersionInfo" />
+			<input>
+				<http:urlEncoded />
+			</input>
+			<output>
+
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+	</binding>
+	<binding name="ZipCodeResolverHttpPost"
+		type="s0:ZipCodeResolverHttpPost">
+		<http:binding verb="POST" />
+		<operation name="FullZipCode">
+			<http:operation location="/FullZipCode" />
+			<input>
+
+				<mime:content type="application/x-www-form-urlencoded" />
+			</input>
+			<output>
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="ShortZipCode">
+			<http:operation location="/ShortZipCode" />
+			<input>
+
+				<mime:content type="application/x-www-form-urlencoded" />
+			</input>
+			<output>
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="CorrectedAddressHtml">
+			<http:operation location="/CorrectedAddressHtml" />
+			<input>
+
+				<mime:content type="application/x-www-form-urlencoded" />
+			</input>
+			<output>
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="CorrectedAddressXml">
+			<http:operation location="/CorrectedAddressXml" />
+			<input>
+
+				<mime:content type="application/x-www-form-urlencoded" />
+			</input>
+			<output>
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+		<operation name="VersionInfo">
+			<http:operation location="/VersionInfo" />
+			<input>
+
+				<mime:content type="application/x-www-form-urlencoded" />
+			</input>
+			<output>
+				<mime:mimeXml part="Body" />
+			</output>
+		</operation>
+	</binding>
+	<service name="ZipCodeResolver">
+		<documentation>
+			Given a valid street address, city, and state, this service
+			returns the proper ZIP code, ZIP code+4, or USPS corrected
+			address. NOTE: This service is meant for non-commercial,
+			personal use only.
+		</documentation>
+
+		<port name="ZipCodeResolverSoap"
+			binding="s0:ZipCodeResolverSoap">
+			<soap:address
+				location="http://webservices.eraserver.net/zipcoderesolver/zipcoderesolver.asmx" />
+		</port>
+		<port name="ZipCodeResolverHttpGet"
+			binding="s0:ZipCodeResolverHttpGet">
+			<http:address
+				location="http://webservices.eraserver.net/zipcoderesolver/zipcoderesolver.asmx" />
+		</port>
+		<port name="ZipCodeResolverHttpPost"
+			binding="s0:ZipCodeResolverHttpPost">
+			<http:address
+				location="http://webservices.eraserver.net/zipcoderesolver/zipcoderesolver.asmx" />
+		</port>
+
+	</service>
+</definitions>

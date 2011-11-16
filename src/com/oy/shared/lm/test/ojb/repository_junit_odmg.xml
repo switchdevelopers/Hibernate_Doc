@@ -1,0 +1,1557 @@
+<!-- Mapping of classes used in junit tests -->
+<!-- @version $Id: repository_junit_odmg.xml,v 1.1 2005/07/29 05:07:42 pavels Exp $ -->
+<!--
+#/* Copyright 2003-2004 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<!-- Definitions for org.apache.ojb.odmg.shared.Article -->
+<descriptor-repository version="1.0">
+   <class-descriptor
+      class="org.apache.ojb.odmg.shared.Article"
+      table="Artikel"
+      isolation-level="read-uncommitted"
+   >
+      <field-descriptor
+         name="articleId"
+         column="Artikel_Nr"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="articleName"
+         column="Artikelname"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="supplierId"
+         column="Lieferanten_Nr"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="productGroupId"
+         column="Kategorie_Nr"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="unit"
+         column="Liefereinheit"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="price"
+         column="Einzelpreis"
+         jdbc-type="FLOAT"
+      />
+      <field-descriptor
+         name="stock"
+         column="Lagerbestand"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="orderedUnits"
+         column="BestellteEinheiten"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="minimumStock"
+         column="MindestBestand"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="isSelloutArticle"
+         column="Auslaufartikel"
+         jdbc-type="INTEGER"
+         conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+      />
+      <reference-descriptor
+         name="productGroup"
+         class-ref="org.apache.ojb.odmg.shared.ProductGroup"
+      >
+         <foreignkey field-ref="productGroupId"/>
+      </reference-descriptor>
+   </class-descriptor>
+
+<!-- Definitions for org.apache.ojb.odmg.shared.ProductGroup -->
+   <class-descriptor
+ 	  class="org.apache.ojb.odmg.shared.ProductGroup"
+ 	  table="Kategorien"
+      isolation-level="serializable"
+   >
+      <field-descriptor
+         name="groupId"
+         column="Kategorie_Nr"
+         jdbc-type="INTEGER"
+         primarykey="true"
+          autoincrement="true"
+      />
+      <field-descriptor
+         name="groupName"
+         column="KategorieName"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="description"
+         column="Beschreibung"
+         jdbc-type="VARCHAR"
+      />
+      <collection-descriptor
+         name="allArticlesInGroup"
+         element-class-ref="org.apache.ojb.odmg.shared.Article"
+      >
+      	 <inverse-foreignkey field-ref="productGroupId"/>
+      </collection-descriptor>
+   </class-descriptor>
+
+
+
+
+    <class-descriptor class="org.apache.ojb.odmg.shared.Person">
+        <extent-class class-ref="org.apache.ojb.odmg.shared.PersonImpl" />
+    </class-descriptor>
+
+
+<!-- Definitions for org.apache.odmg.broker.PersonImpl -->
+   <class-descriptor
+   	  class="org.apache.ojb.odmg.shared.PersonImpl"
+   	  table="FAMILY_MEMBER"
+   	  proxy="dynamic"
+   >
+      <field-descriptor
+         name="id"
+         column="ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="firstname"
+         column="FIRSTNAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="lastname"
+         column="LASTNAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="motherId"
+         column="MOTHER_ID"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="fatherId"
+         column="FATHER_ID"
+         jdbc-type="INTEGER"
+      />
+
+      <reference-descriptor
+         name="mother"
+         class-ref="org.apache.ojb.odmg.shared.PersonImpl"
+      >
+         <foreignkey field-ref="motherId"/>
+      </reference-descriptor>
+      <reference-descriptor
+         name="father"
+         class-ref="org.apache.ojb.odmg.shared.PersonImpl"
+      >
+         <foreignkey field-ref="fatherId"/>
+      </reference-descriptor>
+      <collection-descriptor
+          name="children"
+          element-class-ref="org.apache.ojb.odmg.shared.PersonImpl"
+      >
+          <inverse-foreignkey field-ref="fatherId"/>
+     </collection-descriptor>
+   </class-descriptor>
+
+
+
+   <class-descriptor
+   	  class="org.apache.ojb.odmg.shared.Master"
+   	  table="MDTEST_MASTER"
+   >
+      <field-descriptor
+         name="masterId"
+         column="MASTERID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="masterText"
+         column="MASTER_TEXT"
+         jdbc-type="VARCHAR"
+      />
+      <collection-descriptor
+         name="collDetailFKinPK"
+         element-class-ref="org.apache.ojb.odmg.shared.DetailFKinPK"
+      >
+         <inverse-foreignkey field-ref="masterId"/>
+      </collection-descriptor>
+      <collection-descriptor
+         name="collDetailFKnoPK"
+         element-class-ref="org.apache.ojb.odmg.shared.DetailFKnoPK"
+      >
+         <inverse-foreignkey field-ref="masterId"/>
+      </collection-descriptor>
+   </class-descriptor>
+
+
+
+   <class-descriptor
+   	  class="org.apache.ojb.odmg.shared.DetailFKinPK"
+   	  table="MDTEST_DETAIL_FKINPK"
+   >
+      <field-descriptor
+         name="masterId"
+         column="MASTERID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+      />
+      <field-descriptor
+         name="detailId"
+         column="DETAILID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="detailText"
+         column="DETAIL_TEXT"
+         jdbc-type="VARCHAR"
+      />
+      <reference-descriptor
+         name="master"
+         class-ref="org.apache.ojb.odmg.shared.Master"
+      >
+         <foreignkey field-ref="masterId"/>
+      </reference-descriptor>
+   </class-descriptor>
+
+
+
+   <class-descriptor
+      class="org.apache.ojb.odmg.shared.DetailFKnoPK"
+      table="MDTEST_DETAIL_FKNOPK"
+   >
+      <field-descriptor
+         name="detailId"
+         column="DETAILID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="masterId"
+         column="MASTERID"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="detailText"
+         column="DETAIL_TEXT"
+         jdbc-type="VARCHAR"
+      />
+      <reference-descriptor
+         name="master"
+         class-ref="org.apache.ojb.odmg.shared.Master"
+      >
+         <foreignkey field-ref="masterId"/>
+      </reference-descriptor>
+   </class-descriptor>
+
+
+
+    <!-- Definitions for org.apache.ojb.odmg.shared.TestClassA -->
+    <class-descriptor
+        class="org.apache.ojb.odmg.shared.TestClassA"
+        table="TestClassA"
+    >
+        <field-descriptor
+           name="oid"
+           column="id"
+           jdbc-type="VARCHAR"
+           primarykey="true"
+           autoincrement="true"
+        />
+        <field-descriptor
+          name="value1"
+          column="value1"
+          jdbc-type="VARCHAR"
+        />
+        <field-descriptor
+           name="value2"
+           column="value2"
+           jdbc-type="VARCHAR"
+        />
+        <field-descriptor
+           name="value3"
+           column="value3"
+           jdbc-type="INTEGER"
+        />
+        <field-descriptor
+           name="boid"
+           column="bOid"
+           jdbc-type="VARCHAR"
+        />
+         <reference-descriptor
+           name="b"
+           class-ref="org.apache.ojb.odmg.shared.TestClassB"
+         >
+           <foreignkey field-ref="boid"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+
+
+    <!-- Definitions for org.apache.ojb.odmg.shared.TestClassB -->
+     <class-descriptor
+        class="org.apache.ojb.odmg.shared.TestClassB"
+        table="TestClassB"
+     >
+         <field-descriptor
+            name="oid"
+            column="id"
+            jdbc-type="VARCHAR"
+            primarykey="true"
+            autoincrement="true"
+         />
+         <field-descriptor
+           name="value1"
+           column="value1"
+           jdbc-type="VARCHAR"
+         />
+         <field-descriptor
+            name="aoid"
+            column="aOid"
+            jdbc-type="VARCHAR"
+         />
+         <reference-descriptor
+            name="a"
+            class-ref="org.apache.ojb.odmg.shared.TestClassA"
+         >
+            <foreignkey field-ref="aoid"/>
+         </reference-descriptor>
+    </class-descriptor>
+
+
+
+    <!-- Definitions for org.apache.ojb.odmg.shared.TestClassAWithBProxy -->
+    <class-descriptor
+        class="org.apache.ojb.odmg.shared.TestClassAWithBProxy"
+        table="TestClassA"
+    >
+        <field-descriptor
+           name="oid"
+           column="id"
+           jdbc-type="VARCHAR"
+           primarykey="true"
+           autoincrement="true"
+        />
+        <field-descriptor
+          name="value1"
+          column="value1"
+          jdbc-type="VARCHAR"
+        />
+        <field-descriptor
+           name="value2"
+           column="value2"
+           jdbc-type="VARCHAR"
+        />
+        <field-descriptor
+           name="value3"
+           column="value3"
+           jdbc-type="INTEGER"
+        />
+        <field-descriptor
+           name="boid"
+           column="bOid"
+           jdbc-type="VARCHAR"
+        />
+         <reference-descriptor
+           name="bp"
+           class-ref="org.apache.ojb.odmg.shared.TestClassBProxy"
+         >
+           <foreignkey field-ref="boid"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+
+    <!--
+        Definitions for org.apache.ojb.odmg.shared.TestClassBProxy
+        -->
+     <class-descriptor
+        class="org.apache.ojb.odmg.shared.TestClassBProxy"
+        table="TestClassB"
+        proxy="dynamic"
+     >
+         <field-descriptor
+            name="oid"
+            column="id"
+            jdbc-type="VARCHAR"
+            primarykey="true"
+            autoincrement="true"
+         />
+         <field-descriptor
+           name="value1"
+           column="value1"
+           jdbc-type="VARCHAR"
+         />
+    </class-descriptor>
+
+
+
+    <class-descriptor
+        class="org.apache.ojb.odmg.ODMGRollbackTest$RollbackObjectOne"
+        table="ROLLBACK_ONE"
+     >
+         <field-descriptor
+            name="objId"
+            column="OBJ_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+         />
+         <field-descriptor
+           name="name"
+           column="NAME"
+           jdbc-type="VARCHAR"
+         />
+        <field-descriptor
+           name="description"
+           column="DESCRIPTION"
+           jdbc-type="VARCHAR"
+         />
+    </class-descriptor>
+
+
+
+    <class-descriptor
+        class="org.apache.ojb.odmg.ODMGRollbackTest$RollbackObjectTwo"
+        table="ROLLBACK_TWO"
+     >
+         <field-descriptor
+            name="objId"
+            column="OBJ_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+         />
+         <field-descriptor
+           name="name"
+           column="NAME"
+           jdbc-type="VARCHAR"
+         />
+        <field-descriptor
+           name="description"
+           column="DESCRIPTION"
+           jdbc-type="VARCHAR"
+         />
+    </class-descriptor>
+
+
+
+    <!-- Definitions for org.apache.ojb.odmg.shared.ODMGZoo -->
+	<class-descriptor
+   	  class="org.apache.ojb.odmg.shared.ODMGZoo"
+   	  table="ZOO"
+   >
+  	<field-descriptor
+ 	  name="zooId"
+ 	  column="zooId"
+ 	  jdbc-type="INTEGER"
+ 	  primarykey="true"
+ 	  autoincrement="true"
+ 	/>
+	<field-descriptor
+		name="name"
+       	column="name"
+        jdbc-type="VARCHAR"
+  	/>
+	<collection-descriptor
+     	name="animals"
+        element-class-ref="org.apache.ojb.broker.InterfaceAnimal"
+      >
+		<inverse-foreignkey field-ref="zooId"/>
+      </collection-descriptor>
+ 	</class-descriptor>
+
+
+
+    <!-- Definitions for org.apache.ojb.odmg.shared.ODMGGourmet -->
+	<class-descriptor
+   	  class="org.apache.ojb.odmg.shared.ODMGGourmet"
+   	  table="GOURMET"
+   >
+  	<field-descriptor
+ 	  name="gourmetId"
+ 	  column="gourmetId"
+ 	  jdbc-type="INTEGER"
+ 	  primarykey="true"
+ 	  autoincrement="true"
+ 	/>
+	<field-descriptor
+		name="name"
+       	column="name"
+        jdbc-type="VARCHAR"
+  	/>
+     <collection-descriptor
+         name="favoriteFood"
+         collection-class="org.apache.ojb.odmg.collections.DListImpl"
+         element-class-ref="org.apache.ojb.broker.InterfaceFood"
+         indirection-table="GOURMET_FOOD"
+      >
+         <fk-pointing-to-this-class column="GOURMET_ID"/>
+         <fk-pointing-to-element-class column="FOOD_ID"/>
+      </collection-descriptor>
+ 	</class-descriptor>
+
+
+
+<!-- Field conversion test using ODMG-api
+    note, we do not use autoincrement -->
+    <class-descriptor
+        class="org.apache.ojb.odmg.FieldConversionTest_4$Node"
+        table="FIELD_CONVERSION_NODE"
+    >
+        <field-descriptor
+            name="uid"
+            column="NODE_ID"
+            jdbc-type="DECIMAL"
+            primarykey="true"
+            autoincrement="false"
+            conversion="org.apache.ojb.odmg.FieldConversionTest_4$LongToBigDecimalConversion"
+        />
+
+        <field-descriptor
+            name="nodeState"
+            column="NODE_STATE"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="false"
+            conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"
+        />
+
+        <field-descriptor
+            name="refId"
+            column="PARENT_UID"
+            jdbc-type="DECIMAL"
+            conversion="org.apache.ojb.odmg.FieldConversionTest_4$LongToBigDecimalConversion"
+        />
+
+        <reference-descriptor
+            name="parent"
+            class-ref="org.apache.ojb.odmg.FieldConversionTest_4$Node"
+            auto-update="true"
+        >
+            <foreignkey field-ref="refId"/>
+            <foreignkey field-ref="nodeState"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.DListTest$DListObject"
+   	  table="ODMG_DLIST"
+    >
+        <field-descriptor
+         name="id"
+         column="ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+        <field-descriptor
+         name="randomName"
+         column="RND_NAME"
+         jdbc-type="VARCHAR"
+        />
+   </class-descriptor>
+
+
+
+<!-- ************************************************* -->
+<!--      User posted test case                        -->
+<!-- ************************************************* -->
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.shared.Site"
+   	  table="SITE"
+    >
+        <field-descriptor
+         name="id"
+         column="ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+        <field-descriptor
+         name="year"
+         column="SITEYEAR"
+         jdbc-type="INTEGER"
+        />
+        <field-descriptor
+         name="semester"
+         column="SEMESTER"
+         jdbc-type="INTEGER"
+        />
+   </class-descriptor>
+
+
+
+<!-- ************************************************* -->
+<!--      ODMG collection tests                        -->
+<!-- ************************************************* -->
+    <!--
+        private Integer gatId;
+        private String name;
+        private Collection collectiblesA;
+        private Collection collectiblesB;
+    -->
+    <class-descriptor
+        class="org.apache.ojb.odmg.CollectionsTest$Gatherer"
+        table="COLLECTION_GATHERER">
+
+        <field-descriptor
+         name="gatId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+            name="collectiblesA"
+            element-class-ref="org.apache.ojb.odmg.CollectionsTest$CollectibleA"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesB"
+            element-class-ref="org.apache.ojb.odmg.CollectionsTest$CollectibleB"
+            proxy="true"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesC"
+            element-class-ref="org.apache.ojb.odmg.CollectionsTest$CollectibleC"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor class="org.apache.ojb.odmg.CollectionsTest$CollectibleAIF">
+      <extent-class class-ref="org.apache.ojb.odmg.CollectionsTest$CollectibleA" />
+   </class-descriptor>
+
+
+    <!--
+        private Integer colId;
+        private String name;
+        private Integer gathererId;
+        private Gatherer gatherer;
+        private String extentName;
+    -->
+    <class-descriptor
+        class="org.apache.ojb.odmg.CollectionsTest$CollectibleA"
+        table="COLLECTION_COLLECTIBLE_A">
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+        <reference-descriptor
+            name="gatherer"
+            class-ref="org.apache.ojb.odmg.CollectionsTest$Gatherer"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="gathererId"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+
+
+    <class-descriptor
+        class="org.apache.ojb.odmg.CollectionsTest$CollectibleB"
+        table="COLLECTION_COLLECTIBLE_B">
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+        <reference-descriptor
+            name="gatherer"
+            class-ref="org.apache.ojb.odmg.CollectionsTest$Gatherer"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="gathererId"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+
+
+    <class-descriptor
+        class="org.apache.ojb.odmg.CollectionsTest$CollectibleC"
+        table="COLLECTION_COLLECTIBLE_C">
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="extentName"
+         column="EXTENT_NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <!-- ************************************************* -->
+    <!-- Multithreaded lock test                           -->
+    <!-- ************************************************* -->
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.LockingMultithreadedTest$LockObject"
+   	  table="LOCK_MULTI"
+    >
+        <field-descriptor
+         name="id"
+         column="OJB_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="refId"
+         column="REF_ID"
+         jdbc-type="INTEGER"
+            access="anonymous"
+        />
+
+        <field-descriptor
+         name="version"
+         column="VERSION"
+         jdbc-type="INTEGER"
+         locking="false"
+        />
+
+        <reference-descriptor
+            name="reference"
+            class-ref="org.apache.ojb.odmg.LockingMultithreadedTest$LockObjectRef"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="refId"/>
+        </reference-descriptor>
+   </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.LockingMultithreadedTest$LockObjectRef"
+   	  table="LOCK_MULTI_REF"
+    >
+        <field-descriptor
+         name="id"
+         column="OJB_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="version"
+         column="VERSION"
+         jdbc-type="INTEGER"
+         locking="false"
+        />
+   </class-descriptor>
+
+
+
+    <!-- ************************************************* -->
+    <!-- OQLTest test classes                              -->
+    <!-- ************************************************* -->
+    <!-- Definitions for extent org.apache.ojb.broker.InterfaceAnimal -->
+   <class-descriptor class="org.apache.ojb.odmg.OQLTest$InterfaceAnimal">
+      <extent-class class-ref="org.apache.ojb.odmg.OQLTest$Mammal" />
+      <extent-class class-ref="org.apache.ojb.odmg.OQLTest$Reptile" />
+   </class-descriptor>
+
+    <!-- Definitions for extent org.apache.ojb.odmg.OQLTest$InterfaceFood -->
+   <class-descriptor class="org.apache.ojb.odmg.OQLTest$InterfaceFood">
+      <extent-class class-ref="org.apache.ojb.odmg.OQLTest$Salad" />
+      <extent-class class-ref="org.apache.ojb.odmg.OQLTest$Fish" />
+   </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.odmg.OQLTest$Mammal -->
+    <class-descriptor
+      class="org.apache.ojb.odmg.OQLTest$Mammal"
+      table="MAMMAL"
+    >
+    <field-descriptor
+      name="animalId"
+      column="animalId"
+      jdbc-type="INTEGER"
+      primarykey="true"
+      autoincrement="true"
+    />
+    <field-descriptor
+        name="name"
+        column="name"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="age"
+        column="age"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="numLegs"
+        column="numLegs"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="zooId"
+        column="zooId"
+        jdbc-type="INTEGER"
+    />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.odmg.OQLTest$Reptile -->
+    <class-descriptor
+      class="org.apache.ojb.odmg.OQLTest$Reptile"
+      table="REPTILE"
+    >
+    <field-descriptor
+      name="animalId"
+      column="animalId"
+      jdbc-type="INTEGER"
+      primarykey="true"
+      autoincrement="true"
+    />
+    <field-descriptor
+        name="name"
+        column="name"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="age"
+        column="age"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="color"
+        column="color"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="zooId"
+        column="zooId"
+        jdbc-type="INTEGER"
+    />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.odmg.OQLTest$Zoo -->
+    <class-descriptor
+      class="org.apache.ojb.odmg.OQLTest$Zoo"
+      table="ZOO"
+    >
+    <field-descriptor
+      name="zooId"
+      column="zooId"
+      jdbc-type="INTEGER"
+      primarykey="true"
+      autoincrement="true"
+    />
+    <field-descriptor
+        name="name"
+        column="name"
+        jdbc-type="VARCHAR"
+    />
+    <collection-descriptor
+        name="animals"
+        element-class-ref="org.apache.ojb.odmg.OQLTest$InterfaceAnimal"
+        auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+      >
+        <inverse-foreignkey field-ref="zooId"/>
+      </collection-descriptor>
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.odmg.OQLTest$Fish -->
+    <class-descriptor
+      class="org.apache.ojb.odmg.OQLTest$Fish"
+      table="FISH"
+    >
+    <field-descriptor
+      name="foodId"
+      column="foodId"
+      jdbc-type="INTEGER"
+      primarykey="true"
+      autoincrement="true"
+    />
+    <field-descriptor
+        name="name"
+        column="name"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="calories"
+        column="calories"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="typeOfWater"
+        column="typeOfWater"
+        jdbc-type="VARCHAR"
+    />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.odmg.OQLTest$Salad -->
+    <class-descriptor
+      class="org.apache.ojb.odmg.OQLTest$Salad"
+      table="SALAD"
+    >
+    <field-descriptor
+      name="foodId"
+      column="foodId"
+      jdbc-type="INTEGER"
+      primarykey="true"
+      autoincrement="true"
+    />
+    <field-descriptor
+        name="name"
+        column="name"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="calories"
+        column="calories"
+        jdbc-type="INTEGER"
+    />
+    <field-descriptor
+        name="color"
+        column="color"
+        jdbc-type="VARCHAR"
+    />
+
+    </class-descriptor>
+
+
+    <!-- Definitions for org.apache.ojb.odmg.OQLTest$Gourmet -->
+    <class-descriptor
+      class="org.apache.ojb.odmg.OQLTest$Gourmet"
+      table="GOURMET"
+    >
+    <field-descriptor
+      name="gourmetId"
+      column="gourmetId"
+      jdbc-type="INTEGER"
+      primarykey="true"
+      autoincrement="true"
+    />
+    <field-descriptor
+        name="name"
+        column="name"
+        jdbc-type="VARCHAR"
+    />
+     <collection-descriptor
+         name="favoriteFood"
+         element-class-ref="org.apache.ojb.odmg.OQLTest$InterfaceFood"
+         auto-retrieve="true"
+         auto-update="false"
+         indirection-table="GOURMET_FOOD"
+      >
+         <fk-pointing-to-this-class column="GOURMET_ID"/>
+         <fk-pointing-to-element-class column="FOOD_ID"/>
+      </collection-descriptor>
+    </class-descriptor>
+
+<!-- ==============================================
+ m:n test
+ ==================================================-->
+
+    <class-descriptor class="org.apache.ojb.odmg.M2NTest$Movie">
+      <extent-class class-ref="org.apache.ojb.odmg.M2NTest$MovieImpl" />
+    </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.M2NTest$MovieImpl"
+   	  table="M2N_TEST_MOVIE"
+    >
+        <field-descriptor
+            name="idInt"
+            column="OBJ_ID_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="idInt2"
+            column="OBJ_ID2_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="idStr"
+            column="OBJ_ID_STR"
+            jdbc-type="VARCHAR"
+            primarykey="true"
+            autoincrement="false"
+        />
+
+        <field-descriptor
+            name="title"
+            column="TITLE"
+            jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+            name="description"
+            column="DESCRIPTION"
+            jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+            name="actors"
+            collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
+            element-class-ref="org.apache.ojb.odmg.M2NTest$Actor"
+            auto-retrieve="false"
+            auto-update="false"
+            auto-delete="false"
+            indirection-table="M2N_TEST_ROLE"
+        >
+            <fk-pointing-to-this-class column="MOVIE_ID_INT"/>
+            <fk-pointing-to-this-class column="MOVIE_ID2_INT"/>
+            <fk-pointing-to-this-class column="MOVIE_ID_STR"/>
+            <fk-pointing-to-element-class column="ACTOR_ID"/>
+            <fk-pointing-to-element-class column="ACTOR_ID2"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.M2NTest$Actor"
+   	  table="M2N_TEST_ACTOR"
+    >
+        <field-descriptor
+            name="id"
+            column="OBJ_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="id2"
+            column="OBJ_ID2"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="name"
+            column="NAME"
+            jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+            name="movies"
+            collection-class="org.apache.ojb.odmg.M2NTest$MovieManageableCollection"
+            element-class-ref="org.apache.ojb.odmg.M2NTest$MovieImpl"
+            auto-retrieve="false"
+            auto-update="false"
+            auto-delete="false"
+            indirection-table="M2N_TEST_ROLE"
+        >
+            <fk-pointing-to-this-class column="ACTOR_ID"/>
+            <fk-pointing-to-this-class column="ACTOR_ID2"/>
+            <fk-pointing-to-element-class column="MOVIE_ID_INT"/>
+            <fk-pointing-to-element-class column="MOVIE_ID2_INT"/>
+            <fk-pointing-to-element-class column="MOVIE_ID_STR"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.M2NTest$Role"
+   	  table="M2N_TEST_ROLE"
+    >
+        <field-descriptor
+            name="actorId"
+            column="ACTOR_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+        />
+
+        <field-descriptor
+            name="actorId2"
+            column="ACTOR_ID2"
+            jdbc-type="INTEGER"
+            primarykey="true"
+        />
+
+        <field-descriptor
+            name="movieIntId"
+            column="MOVIE_ID_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="movieIntId2"
+            column="MOVIE_ID2_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="movieStrId"
+            column="MOVIE_ID_STR"
+            jdbc-type="VARCHAR"
+            primarykey="true"
+        />
+    </class-descriptor>
+
+
+<!-- =================================================== -->
+<!-- Mapping Classes on Multiple Joined Tables test      -->
+<!-- =================================================== -->
+<class-descriptor
+	class="org.apache.ojb.odmg.InheritanceMultipleTableTest$Employee"
+	table="INHERITANCE_MULTI_EMPLOYEE"
+ >
+    <field-descriptor
+        name="id"
+        column="OBJ_ID"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />
+
+    <field-descriptor
+        name="fkAddress"
+        column="FK_ADDRESS"
+        jdbc-type="INTEGER"
+        access="anonymous"
+    />
+
+    <reference-descriptor name="address"
+        class-ref="org.apache.ojb.odmg.InheritanceMultipleTableTest$Address"
+        auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+    >
+        <foreignkey field-ref="fkAddress" />
+    </reference-descriptor>
+</class-descriptor>
+
+<class-descriptor
+	class="org.apache.ojb.odmg.InheritanceMultipleTableTest$Executive"
+	table="INHERITANCE_MULTI_EXECUTIVE"
+ >
+    <field-descriptor
+        name="id"
+        column="OBJ_ID"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="department"
+        column="DEPARTMENT"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="superId"
+        column="SUPER_ID"
+        jdbc-type="INTEGER"
+        access="anonymous"
+    />
+
+    <field-descriptor
+        name="managerId"
+        column="MANAGER_ID"
+        jdbc-type="INTEGER"
+        access="anonymous"
+    />
+
+    <reference-descriptor name="super"
+        class-ref="org.apache.ojb.odmg.InheritanceMultipleTableTest$Employee"
+        auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+    >
+        <foreignkey field-ref="superId" />
+    </reference-descriptor>
+
+    <reference-descriptor name="manager"
+        class-ref="org.apache.ojb.odmg.InheritanceMultipleTableTest$Manager"
+        auto-retrieve="false"
+        auto-update="none"
+        auto-delete="none"
+    >
+        <foreignkey field-ref="managerId" />
+    </reference-descriptor>
+</class-descriptor>
+
+<class-descriptor
+	class="org.apache.ojb.odmg.InheritanceMultipleTableTest$Manager"
+	table="INHERITANCE_MULTI_MANAGER"
+ >
+    <field-descriptor
+        name="id"
+        column="OBJ_ID"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor
+        name="superId"
+        column="SUPER_ID"
+        jdbc-type="INTEGER"
+        access="anonymous"
+    />
+
+    <reference-descriptor name="super"
+        class-ref="org.apache.ojb.odmg.InheritanceMultipleTableTest$Executive"
+        auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+    >
+        <foreignkey field-ref="superId" />
+    </reference-descriptor>
+
+    <collection-descriptor
+        name="executives"
+        element-class-ref="org.apache.ojb.odmg.InheritanceMultipleTableTest$Executive"
+        proxy="true"
+        auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+    >
+            <inverse-foreignkey field-ref="managerId"/>
+    </collection-descriptor>
+</class-descriptor>
+
+<class-descriptor
+	class="org.apache.ojb.odmg.InheritanceMultipleTableTest$Address"
+	table="INHERITANCE_MULTI_ADDRESS"
+ >
+    <field-descriptor
+        name="id"
+        column="OBJ_ID"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor
+        name="street"
+        column="STREET"
+        jdbc-type="VARCHAR"
+    />
+</class-descriptor>
+
+
+
+    <class-descriptor
+	  class="org.apache.ojb.odmg.shared.Project"
+	  table="PROJECT"
+   >
+      <field-descriptor
+         name="id"
+         column="ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="title"
+         column="TITLE"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="description"
+         column="DESCRIPTION"
+         jdbc-type="VARCHAR"
+      />
+
+      <collection-descriptor
+         name="roles"
+         element-class-ref="org.apache.ojb.odmg.shared.Role"
+          auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+      >
+         <inverse-foreignkey field-ref="project_id"/>
+      </collection-descriptor>
+
+      <collection-descriptor
+         name="members"
+         element-class-ref="org.apache.ojb.odmg.shared.Member"
+         auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+         indirection-table="PERSON_PROJECT"
+      >
+         <fk-pointing-to-this-class column="PROJECT_ID"/>
+         <fk-pointing-to-element-class column="PERSON_ID"/>
+      </collection-descriptor>
+   </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.shared.Member"
+   	  table="PERSON"
+   >
+      <field-descriptor
+         name="id"
+         column="ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+      />
+      <field-descriptor
+         name="firstname"
+         column="FIRSTNAME"
+         jdbc-type="VARCHAR"
+      />
+      <field-descriptor
+         name="lastname"
+         column="LASTNAME"
+         jdbc-type="VARCHAR"
+      />
+
+      <collection-descriptor
+         name="roles"
+         element-class-ref="org.apache.ojb.odmg.shared.Role"
+        auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+      >
+         <inverse-foreignkey field-ref="member_id"/>
+      </collection-descriptor>
+
+      <collection-descriptor
+         name="projects"
+         element-class-ref="org.apache.ojb.odmg.shared.Project"
+         auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+         indirection-table="PERSON_PROJECT"
+      >
+         <fk-pointing-to-this-class column="PERSON_ID"/>
+         <fk-pointing-to-element-class column="PROJECT_ID"/>
+      </collection-descriptor>
+   </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.shared.Role"
+   	  table="PERSON_PROJECT"
+   >
+      <field-descriptor
+         name="member_id"
+         column="PERSON_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+      />
+      <field-descriptor
+         name="project_id"
+         column="PROJECT_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+      />
+      <field-descriptor
+         name="roleName"
+         column="ROLENAME"
+         jdbc-type="VARCHAR"
+      />
+      <reference-descriptor
+         name="member"
+         class-ref="org.apache.ojb.odmg.shared.Member"
+          auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+      >
+         <foreignkey field-ref="member_id"/>
+      </reference-descriptor>
+
+      <reference-descriptor
+         name="project"
+         class-ref="org.apache.ojb.odmg.shared.Project"
+          auto-retrieve="true"
+        auto-update="false"
+        auto-delete="false"
+      >
+         <foreignkey field-ref="project_id"/>
+      </reference-descriptor>
+
+      <collection-descriptor
+         name="tasks"
+         element-class-ref="org.apache.ojb.odmg.shared.Task"
+         auto-retrieve="true"
+         auto-update="false"
+         auto-delete="false"
+      >
+         <inverse-foreignkey field-ref="member_id"/>
+         <inverse-foreignkey field-ref="project_id"/>
+      </collection-descriptor>
+   </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.odmg.shared.Task"
+   	  table="TASK"
+   >
+      <field-descriptor
+         name="task_id"
+         column="TASK_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+      />
+      <field-descriptor
+         name="member_id"
+         column="PERSON_ID"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="project_id"
+         column="PROJECT_ID"
+         jdbc-type="INTEGER"
+      />
+      <field-descriptor
+         name="taskName"
+         column="TASKNAME"
+         jdbc-type="VARCHAR"
+      />
+      <reference-descriptor
+         name="role"
+         class-ref="org.apache.ojb.odmg.shared.Role"
+      >
+         <foreignkey field-ref="member_id"/>
+         <foreignkey field-ref="project_id"/>
+      </reference-descriptor>
+   </class-descriptor>
+
+
+<!-- Mapping of classes used in junit tests and tutorials ends here -->
+</descriptor-repository>

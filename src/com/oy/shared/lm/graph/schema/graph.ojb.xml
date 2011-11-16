@@ -1,0 +1,143 @@
+<descriptor-repository version="1.0" moo-ojb-version="1"
+    moo-ojb-class="com.oy.shared.graphviz.graph.bo.Schema">
+
+    <class-descriptor class="com.oy.shared.lm.graph.bo.GraphBean">
+		<collection-descriptor name="nodes" element-class-ref="com.oy.shared.lm.graph.bo.GraphNodeBean"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="nodeId"/>
+        </collection-descriptor>    
+		<collection-descriptor name="edges" element-class-ref="com.oy.shared.lm.graph.bo.GraphEdgeBean"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="edgeId"/>
+        </collection-descriptor>         
+		<collection-descriptor name="groups" element-class-ref="com.oy.shared.lm.graph.bo.GraphGroupBean"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="groupId"/>
+        </collection-descriptor>              
+        <field-descriptor name="infoId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="info" class-ref="com.oy.shared.lm.graph.bo.GraphInfo"
+            auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+            <foreignkey field-ref="infoId"/>
+        </reference-descriptor>               
+    </class-descriptor> 
+
+
+    <class-descriptor class="com.oy.shared.lm.graph.bo.GraphGroupBean">
+	    <field-descriptor name="groupId" jdbc-type="INTEGER"/>
+        <field-descriptor name="graphId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="Graph" class-ref="com.oy.shared.lm.graph.bo.GraphBean"
+            auto-retrieve="true" auto-update="object" auto-delete="none" proxy="true">
+            <foreignkey field-ref="graphId"/>
+        </reference-descriptor>    
+        <field-descriptor name="infoId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="info" class-ref="com.oy.shared.lm.graph.bo.GroupInfo"
+            auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+            <foreignkey field-ref="infoId"/>
+        </reference-descriptor>            
+    </class-descriptor> 
+
+
+    <class-descriptor class="com.oy.shared.lm.graph.bo.GraphNodeBean">
+	    <field-descriptor name="nodeId" jdbc-type="INTEGER"/>
+        <field-descriptor name="graphId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="Graph" class-ref="com.oy.shared.lm.graph.bo.GraphBean"
+            auto-retrieve="true" auto-update="object" auto-delete="none" proxy="true">
+            <foreignkey field-ref="graphId"/>
+        </reference-descriptor>    
+        <field-descriptor name="infoId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="info" class-ref="com.oy.shared.lm.graph.bo.NodeInfo"
+            auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+            <foreignkey field-ref="infoId"/>
+        </reference-descriptor>            
+        <field-descriptor name="memberOfId" jdbc-type="INTEGER"/> 
+        <reference-descriptor name="memberOf" class-ref="com.oy.shared.lm.graph.bo.GraphGroupBean"
+            auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+            <foreignkey field-ref="memberOfId"/>
+        </reference-descriptor>                    
+    </class-descriptor> 
+    
+    
+    <class-descriptor class="com.oy.shared.lm.graph.bo.GraphEdgeBean">    
+	    <field-descriptor name="edgeId" jdbc-type="INTEGER"/>    
+	    
+        <field-descriptor name="graphId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="Graph" class-ref="com.oy.shared.lm.graph.bo.GraphBean"
+            auto-retrieve="true" auto-update="object" auto-delete="none" proxy="true">
+            <foreignkey field-ref="graphId"/>
+        </reference-descriptor>
+        
+        <field-descriptor name="infoId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="info" class-ref="com.oy.shared.lm.graph.bo.EdgeInfo"
+            auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+            <foreignkey field-ref="infoId"/>
+        </reference-descriptor>            
+        
+        <field-descriptor name="fromNodeId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="fromNode" class-ref="com.oy.shared.lm.graph.bo.GraphNodeBean"
+            auto-retrieve="true" auto-update="object" auto-delete="none" proxy="true">
+            <foreignkey field-ref="fromNodeId"/>
+        </reference-descriptor>            
+        
+        <field-descriptor name="toNodeId" jdbc-type="INTEGER"/>
+        <reference-descriptor name="toNode" class-ref="com.oy.shared.lm.graph.bo.GraphNodeBean"
+            auto-retrieve="true" auto-update="object" auto-delete="none" proxy="true">
+            <foreignkey field-ref="toNodeId"/>
+        </reference-descriptor>                
+    </class-descriptor> 
+    
+    <class-descriptor class="com.oy.shared.lm.graph.bo.BaseInfo" moo-jav-abstract="true">
+   	    <extent-class class-ref="com.oy.shared.lm.graph.bo.GraphInfo" />            
+   	    <extent-class class-ref="com.oy.shared.lm.graph.bo.NodeInfo" />            
+   	    <extent-class class-ref="com.oy.shared.lm.graph.bo.EdgeInfo" />        
+   	    <extent-class class-ref="com.oy.shared.lm.graph.bo.GroupInfo" />
+    
+		<field-descriptor name="caption" jdbc-type="VARCHAR"/>				    
+
+		<field-descriptor name="fillColor" jdbc-type="VARCHAR"/>	
+		<field-descriptor name="lineColor" jdbc-type="VARCHAR"/>							
+    
+		<field-descriptor name="fontColor" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="fontSize" jdbc-type="DOUBLE"/>				
+		<field-descriptor name="fontName" jdbc-type="VARCHAR"/>				
+
+		<field-descriptor name="attributes" jdbc-type="VARCHAR"/>						 
+    </class-descriptor> 
+
+    <class-descriptor class="com.oy.shared.lm.graph.bo.GraphInfo">
+		<field-descriptor name="rotated" jdbc-type="BOOLEAN"/>
+		
+		<field-descriptor name="nodeAttributes" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="edgeAttributes" jdbc-type="VARCHAR"/>						
+    </class-descriptor> 
+    
+    <class-descriptor class="com.oy.shared.lm.graph.bo.NodeInfo">
+		<field-descriptor name="header" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="footer" jdbc-type="VARCHAR"/>				
+		
+		<field-descriptor name="shape" jdbc-type="INTEGER" moo-jav-enum="record,box,ellipse,circle,diamond,triangle,invtriangle,hexagon,octagon,parallelogram"/>			
+		
+		<field-descriptor name="mode" jdbc-type="INTEGER" moo-jav-enum="solid,dashed,dotted,bold"/>			
+		
+		<field-descriptor name="filled" jdbc-type="BOOLEAN"/>			
+		<field-descriptor name="rounded" jdbc-type="BOOLEAN"/>			
+    </class-descriptor> 
+
+    <class-descriptor class="com.oy.shared.lm.graph.bo.EdgeInfo">
+		<field-descriptor name="headCaption" jdbc-type="VARCHAR"/>			
+		<field-descriptor name="tailCaption" jdbc-type="VARCHAR"/>			
+		
+		<field-descriptor name="mode" jdbc-type="INTEGER" moo-jav-enum="solid,dashed,dotted,bold"/>			
+		
+		<field-descriptor name="labelAngle" jdbc-type="DOUBLE"/>				
+		<field-descriptor name="labelDistance" jdbc-type="DOUBLE"/>				
+							
+		<field-descriptor name="arrowSize" jdbc-type="DOUBLE"/>			
+		<field-descriptor name="arrowHead" jdbc-type="INTEGER" moo-jav-enum="normal,onormal,diamond,odiamond,dot,odot,none"/>					
+		<field-descriptor name="arrowTail" jdbc-type="INTEGER" moo-jav-enum="normal,onormal,diamond,odiamond,dot,odot,none"/>					
+    </class-descriptor> 
+    
+    <class-descriptor class="com.oy.shared.lm.graph.bo.GroupInfo">
+	    <field-descriptor name="mode" jdbc-type="INTEGER" moo-jav-enum="none,outlined,filled"/>			
+    </class-descriptor>
+
+</descriptor-repository>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="false" default-lazy="false">
+  <import class="org.hibernate.test.legacy.Container" rename="ContainerX"/>
+  <import class="org.hibernate.test.legacy.Contained"/>
+  <import class="java.lang.Object" rename="Universe"/>
+  <class name="org.hibernate.test.legacy.Container" proxy="org.hibernate.test.legacy.Container">
+    <id column="container_id" name="id" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <list lazy="true" name="oneToMany">
+      <key column="container_id1"/>
+      <index column="list_index"/>
+      <one-to-many class="org.hibernate.test.legacy.Simple"/>
+    </list>
+    <list lazy="true" name="manyToMany">
+      <key column="container_id2"/>
+      <index column="list_index"/>
+      <many-to-many class="org.hibernate.test.legacy.Simple"/>
+    </list>
+    <list lazy="true" name="components">
+      <key column="container_id"/>
+      <index column="list_index"/>
+      <composite-element class="org.hibernate.test.legacy.Container$ContainerInnerClass">
+        <property name="name"/>
+        <property column="count_" name="count"/>
+        <many-to-one name="simple"/>
+        <many-to-one name="one"/>
+        <many-to-one name="many"/>
+      </composite-element>
+    </list>
+    <set lazy="true" name="composites">
+      <key column="container_id"/>
+      <composite-element class="org.hibernate.test.legacy.Container$ContainerInnerClass">
+        <property name="name"/>
+        <many-to-one name="simple"/>
+        <many-to-one name="one"/>
+        <many-to-one name="many"/>
+      </composite-element>
+    </set>
+    <bag cascade="all" name="cascades" table="abcd">
+      <key column="container_id"/>
+      <composite-element class="org.hibernate.test.legacy.Container$ContainerInnerClass">
+        <property name="name"/>
+        <many-to-one cascade="all" name="simple"/>
+        <many-to-one cascade="all" name="one" not-null="true"/>
+        <many-to-one cascade="all" name="many" not-null="true"/>
+      </composite-element>
+    </bag>
+    <bag cascade="save-update" inverse="true" name="bag" table="CCBAG">
+      <key column="container_id"/>
+      <many-to-many class="org.hibernate.test.legacy.Contained" column="contained_id" outer-join="true"/>
+    </bag>
+    <bag cascade="save-update" inverse="true" lazy="true" name="lazyBag" table="LCCBAG">
+      <!--cache usage="read-write"-->
+      <key column="container_id"/>
+      <many-to-many class="org.hibernate.test.legacy.Contained" column="contained_id"/>
+    </bag>
+    <map name="ternaryMap">
+      <key column="container_id"/>
+      <index column="idx" length="32" type="string"/>
+      <composite-element class="org.hibernate.test.legacy.Container$Ternary">
+        <property name="name"/>
+        <many-to-one name="foo"/>
+        <many-to-one name="glarch"/>
+      </composite-element>
+    </map>
+    <set name="ternarySet">
+      <key column="container_id"/>
+      <composite-element class="org.hibernate.test.legacy.Container$Ternary">
+        <property name="name" not-null="true"/>
+        <many-to-one name="foo" not-null="true"/>
+        <many-to-one name="glarch" not-null="true"/>
+      </composite-element>
+    </set>
+  </class>
+  <class name="org.hibernate.test.legacy.Contained" proxy="org.hibernate.test.legacy.Contained">
+    <id column="container_id" name="id" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <bag name="bag" table="CCBAG">
+      <key column="contained_id"/>
+      <many-to-many class="org.hibernate.test.legacy.Container" column="container_id" outer-join="false"/>
+    </bag>
+    <bag lazy="true" name="lazyBag" table="LCCBAG">
+      <key column="contained_id"/>
+      <many-to-many class="org.hibernate.test.legacy.Container" column="container_id"/>
+    </bag>
+  </class>
+</hibernate-mapping>

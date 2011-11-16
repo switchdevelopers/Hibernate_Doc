@@ -1,0 +1,315 @@
+<!-- 
+
+<hibernate-mapping>
+	<class name="org.applabs.base.User" table="USER">
+		<id column="USER_ID" name="id" type="java.lang.Long">
+			<generator class="org.hibernate.id.TableHiLoGenerator">
+				<param name="table">idgen</param>
+				<param name="column">NEXT</param>
+			</generator>
+		</id>
+		<property column="USER_NAME" name="userName"
+			type="java.lang.String" />
+		<property column="USER_PASSWORD" name="userPassword"
+			type="java.lang.String" />
+		<property column="USER_FIRST_NAME" name="userFirstName"
+			type="java.lang.String" />
+		<property column="USER_EMAIL" name="userEmail"
+			type="java.lang.String" />
+		<property column="USER_LAST_NAME" name="userLastName"
+			type="java.lang.String" />
+		<property column="CREATION_DATE" length="4" name="creationDate"
+			type="java.util.Date" />
+		<property column="CREATED_BY" name="createdBy"
+			type="java.lang.Double" />
+		<property column="MODIFICATION_DATE" length="4"
+			name="modificationDate" type="java.util.Date" />
+		<property column="MODIFIED_BY" name="modifiedBy"
+			type="java.lang.Double" />
+		<property column="DELETE_DATE" length="4" name="deleteDate"
+			type="java.util.Date" />
+		<property column="DELETED_BY" name="deletedBy"
+			type="java.lang.Double" />
+		<set name="propertiesSet" lazy="true" inverse="true"
+			cascade="all-delete-orphan">
+			<key column="USER_ID" />
+			<one-to-many class="org.applabs.base.UserProp" />
+		</set>
+		<one-to-one name="manager" class="org.applabs.base.User"/>
+		<many-to-one name="properties" class="org.applabs.base.UserProp" column="properties"/>
+	</class>
+
+
+	<class name="org.applabs.base.UserProp" table="USER_PROP">
+		<id column="USER_PROP_ID" name="id" type="java.lang.Long">
+			<generator class="org.hibernate.id.TableHiLoGenerator">
+				<param name="table">idgen</param>
+				<param name="column">NEXT</param>
+			</generator>
+		</id>
+		<property column="CATEGORY_NAME" name="categoryName"
+			type="java.lang.String" />
+		<property column="CATEGORY_DESCRIPTION"
+			name="categoryDescription" type="java.lang.String" />
+		<property column="CREATED_BY" name="createdBy"
+			type="java.lang.Double" />
+		<property column="CREATION_DATE" length="4" name="creationDate"
+			type="java.util.Date" />
+		<property column="MODIFIED_BY" name="modifiedBy"
+			type="java.lang.Double" />
+		<property column="MODIFICATION_DATE" length="4"
+			name="modificationDate" type="java.util.Date" />
+		<property column="DELETED_BY" name="deletedBy"
+			type="java.lang.Double" />
+		<property column="DELETE_DATE" length="4" name="deleteDate"
+			type="java.util.Date" />
+		<set name="childCatagories">
+  	  	  	<key column="CATAGORY_ID" not-null="true"/>
+			<one-to-many class="org.applabs.base.Category"/>
+  	  	</set>
+  	  	<set name="properties" lazy="true" inverse="true" cascade="all-delete-orphan">
+  	  	  	<key column="CATEGORY_ID" />
+			<one-to-many class="org.applabs.base.CategoryProp" />
+  	  	</set>
+  	</class>
+
+	<class name="org.applabs.base.Category" table="CATEGORY">
+		<id column="CATAGORY_ID" name="id" type="java.lang.Long">
+			<generator class="org.hibernate.id.TableHiLoGenerator">
+				<param name="table">idgen</param>
+				<param name="column">NEXT</param>
+			</generator>
+		</id>
+		<property column="CATEGORY_NAME" name="categoryName"
+			type="java.lang.String" />
+		<property column="CATEGORY_DESCRIPTION"
+			name="categoryDescription" type="java.lang.String" />
+		<property column="CREATED_BY" name="createdBy"
+			type="java.lang.Double" />
+		<property column="CREATION_DATE" length="4" name="creationDate"
+			type="java.util.Date" />
+		<property column="MODIFIED_BY" name="modifiedBy"
+			type="java.lang.Double" />
+		<property column="MODIFICATION_DATE" length="4"
+			name="modificationDate" type="java.util.Date" />
+		<property column="DELETED_BY" name="deletedBy"
+			type="java.lang.Double" />
+		<property column="DELETE_DATE" length="4" name="deleteDate"
+			type="java.util.Date" />
+		<set name="childCatagories">
+			<key column="CATAGORY_ID" not-null="true" />
+			<one-to-many class="org.applabs.base.Category" />
+		</set>
+		<set name="properties" lazy="true" inverse="true"
+			cascade="all-delete-orphan">
+			<key column="CATEGORY_ID" />
+			<one-to-many class="org.applabs.base.CategoryProp" />
+		</set>
+	</class>
+
+	<class name="org.applabs.base.CategoryProp" table="CATEGORY_PROP">
+		<id column="CATEGORY_PROP_ID" name="id" type="java.lang.Long">
+			<generator class="org.hibernate.id.TableHiLoGenerator">
+				<param name="table">idgen</param>
+				<param name="column">NEXT</param>
+			</generator>
+		</id>
+		<property column="CATEGORY_ID" name="categoryId"
+			type="java.lang.Long" />
+		<property column="PROP_NAME" name="propName"
+			type="java.lang.String" />
+		<property column="PROP_VALUE" name="propValue"
+			type="java.lang.String" />
+	</class>
+
+
+	<class name="org.applabs.base.Document" table="DOCUMENT">
+		<id column="DOCUMENT_ID" name="id" type="java.lang.Long">
+			<generator class="sequence" />
+		</id>
+		<property column="DOCUMENT_TITLE" name="documentTitle"
+			type="java.lang.String" />
+		<property column="DOCUMENT_BODY" name="documentBody"
+			type="java.lang.String" />
+		<property column="DOCUMENT_SUMMARY" name="documentSummary"
+			type="java.lang.String" />
+		<property column="CREATED_BY" length="65535" name="createdBy"
+			type="java.lang.Double" />
+		<property column="CREATION_DATE" length="4" name="creationDate"
+			type="java.util.Date" />
+		<property column="MODIFIED_BY" length="65535" name="modifiedBy"
+			type="java.lang.Double" />
+		<property column="MODIFICATION_DATE" length="4"
+			name="modificationDate" type="java.util.Date" />
+		<property column="DELETED_BY" length="65535" name="deletedBy"
+			type="java.lang.Double" />
+		<property column="DELETED_DATE" length="4" name="deletedDate"
+			type="java.util.Date" />
+		<property column="DOCUMENT_VERSION" length="65535"
+			name="documentVersion" type="java.lang.Double" />
+		<property column="DOCUMENT_STATUS" length="65535"
+			name="documentStatus" type="java.lang.Double" />
+		<property column="ENTRY_ID" length="65535" name="entryId"
+			type="java.lang.Double" />
+	</class>
+
+
+	<class name="org.applabs.base.DocumentProp" table="DOCUMENT_PROP">
+		<id column="document_prop_id" name="id" type="java.lang.Long">
+			<generator class="sequence" />
+		</id>
+		<property column="document_id" length="65535" name="documentId"
+			not-null="true" type="java.lang.Double" />
+		<property column="prop_name" name="propName" not-null="true"
+			type="java.lang.String" />
+		<property column="prop_value" name="propValue"
+			type="java.lang.String" />
+		<property column="prop_value_details" name="propValueDetails"
+			type="java.lang.String" />
+	</class>
+
+</hibernate-mapping>
+
+-->
+
+<hibernate-mapping>
+
+	<!-- Emploeyr/Employee -->
+	    <class name="Employer" table="employers">
+        <id name="id">
+            <generator class="sequence">
+                <param name="sequence">employer_id_seq</param>
+            </generator>
+        </id>
+        <property name="name"/>
+    </class>
+
+    <class name="Employment" table="employment_periods">
+
+        <id name="id">
+            <generator class="sequence">
+                <param name="sequence">employment_id_seq</param>
+            </generator>
+        </id>
+        <property name="startDate" column="start_date"/>
+        <property name="endDate" column="end_date"/>
+
+        <component name="hourlyRate" class="MonetoryAmount">
+            <property name="amount">
+                <column name="hourly_rate" sql-type="NUMERIC(12, 2)"/>
+            </property>
+            <property name="currency" length="12"/>
+        </component>
+
+        <many-to-one name="employer" class="Employer" column="employer_id" not-null="true"/>
+        <many-to-one name="employee" class="Employee" column="employee_id" not-null="true"/>
+
+    </class>
+
+    <class name="Employee" table="employees">
+        <id name="id">
+            <generator class="sequence">
+                <param name="sequence">employee_id_seq</param>
+            </generator>
+        </id>
+        <property name="taxfileNumber"/>
+        <component name="name" class="Name">
+            <property name="firstName"/>
+            <property name="initial"/>
+            <property name="lastName"/>
+        </component>
+    </class>
+
+
+
+	<!-- Author/Work -->
+	<class name="Work" table="works" discriminator-value="W">
+
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <discriminator column="type" type="character"/>
+
+        <property name="title"/>
+        <set name="authors" table="author_work" lazy="true">
+            <key>
+                <column name="work_id" not-null="true"/>
+            </key>
+            <many-to-many class="Author">
+                <column name="author_id" not-null="true"/>
+            </many-to-many>
+        </set>
+
+        <subclass name="Book" discriminator-value="B">
+            <property name="text"/>
+        </subclass>
+
+        <subclass name="Song" discriminator-value="S">
+            <property name="tempo"/>
+            <property name="genre"/>
+        </subclass>
+
+    </class>
+
+    <class name="Author" table="authors">
+
+        <id name="id" column="id">
+            <!-- The Author must have the same identifier as the Person -->
+            <generator class="assigned"/> 
+        </id>
+
+        <property name="alias"/>
+        <one-to-one name="person" class="Person" constrained="true"/>
+
+        <set name="works" table="author_work" inverse="true" lazy="true">
+            <key column="author_id"/>
+            <many-to-many class="Work" column="work_id"/>
+        </set>
+
+    </class>
+
+    <class name="Person" table="persons">
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="name"/>
+    </class>
+
+
+	<!-- Customer/Order/Product -->
+	
+    <class name="Customer" table="customers">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="name"/>
+        <set name="orders" inverse="true" lazy="true">
+            <key column="customer_id"/>
+            <one-to-many class="Order"/>
+        </set>
+    </class>
+
+    <class name="Order" table="orders">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="date"/>
+        <many-to-one name="customer" class="Customer" column="customer_id"/>
+        <list name="lineItems" table="line_items" lazy="true">
+            <key column="order_id"/>
+            <index column="line_number"/>
+            <composite-element class="LineItem">
+                <property name="quantity"/>
+                <many-to-one name="product" class="Product" column="product_id"/>
+            </composite-element>
+        </list>
+    </class>
+
+    <class name="Product" table="products">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="serialNumber"/>
+    </class>
+
+</hibernate-mapping>

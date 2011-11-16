@@ -1,0 +1,298 @@
+<definitions
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:LIB="http://modernlifestyle.com/LoveIsBlind"
+  targetNamespace="http://modernlifestyle.com/LoveIsBlind"
+>
+
+  <types>
+    <schema
+      xmlns="http://www.w3.org/2001/XMLSchema"
+      xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+      xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/"
+      targetNamespace="http://modernlifestyle.com/LoveIsBlind"
+    >
+
+      <simpleType name="Sex" >
+        <restriction base="string" >
+          <enumeration value="Male" />
+          <enumeration value="Female" />
+        </restriction>
+      </simpleType>
+
+      <complexType name="StringArray">
+        <complexContent>
+          <restriction base="enc:Array">
+            <attribute ref="enc:arrayType" wsdl:arrayType="string[]" />
+          </restriction>
+        </complexContent>
+      </complexType>
+
+      <complexType name="Characteristics" >
+        <all>
+          <element name="sex" type="LIB:Sex" />
+          <element name="age" type="positiveInteger" />
+          <element name="interests" type="LIB:StringArray" />
+        </all>
+      </complexType>
+
+      <complexType name="Profile" >
+        <complexContent>
+          <extension base="LIB:Characteristics" >
+            <all>
+              <element name="pseudonym" type="string" />
+              <element name="picture" type="string" /> 
+                <!-- Could be base64, a URL, perhaps an attachment. -->
+              <element name="memberID" type="long" />
+            </all>
+          </extension>
+        </complexContent>
+      </complexType>
+
+      <complexType name="ProfileArray">
+        <complexContent>
+          <restriction base="enc:Array">
+            <attribute ref="enc:arrayType" wsdl:arrayType="LIB:Profile[]" />
+          </restriction>
+        </complexContent>
+      </complexType>
+
+      <complexType name="LoveNote" >
+        <all>
+          <element name="suitor" type="string" />
+          <element name="email" type="string" />
+          <element name="message" type="string" />
+        </all>
+      </complexType>
+
+      <complexType name="LoveNoteArray">
+        <complexContent>
+          <restriction base="enc:Array">
+            <attribute ref="enc:arrayType" wsdl:arrayType="LIB:LoveNote[]" />
+          </restriction>
+        </complexContent>
+      </complexType>
+
+    </schema>
+  </types>
+  
+  <message name="findTrueLoveRequest" >
+    <part name="desires" type="LIB:Characteristics" />
+  </message>
+  <message name="findTrueLoveResponse" >
+    <part name="result" type="LIB:ProfileArray" />
+  </message>
+  <message name="sendLoveNoteRequest" >
+    <part name="memberID" type="xs:long" />
+    <part name="note" type="LIB:LoveNote" />
+  </message>
+  <message name="sendLoveNoteResponse" >
+    <part name="result" type="xs:boolean" />
+  </message>
+
+  <message name="getLoveNotesRequest" >
+    <part name="memberID" type="xs:long" />
+  </message>
+  <message name="getLoveNotesResponse" >
+    <part name="result" type="LIB:LoveNoteArray" />
+  </message>
+  <message name="removeLoveNoteRequest" >
+    <part name="memberID" type="xs:long" />
+    <part name="suitor" type="xs:string" />
+  </message>
+
+  <message name="addMemberRequest" >
+    <part name="memberInfo" type="LIB:Profile" />
+    <part name="encryptedPassword" type="xs:string" />
+  </message>
+  <message name="removeMemberRequest" >
+    <part name="memberID" type="xs:long" />
+  </message>
+
+  <message name="emptyMessage" />
+
+  <portType name="WalkIn" >
+    <operation name="findTrueLove" >
+      <input message="LIB:findTrueLoveRequest" />
+      <output message="LIB:findTrueLoveResponse" />
+    </operation>
+    <operation name="sendLoveNote" parameterOrder="memberID note" >
+      <input message="LIB:sendLoveNoteRequest" />
+      <output message="LIB:sendLoveNoteResponse" />
+    </operation>
+  </portType>
+
+  <portType name="MembersOnly" >
+    <operation name="getLoveNotes" >
+      <input message="LIB:getLoveNotesRequest" />
+      <output message="LIB:getLoveNotesResponse" />
+    </operation>
+    <operation name="removeLoveNote" parameterOrder="memberID suitor" >
+      <input message="LIB:removeLoveNoteRequest" />
+      <output message="LIB:emptyMessage" />
+    </operation>
+  </portType>
+
+  <portType name="Admin" >
+    <operation name="getAllMembers" >
+      <input message="LIB:emptyMessage" />
+      <output message="LIB:findTrueLoveResponse" /> <!-- Note reuse for convenience. -->
+    </operation>
+    <operation name="addMember" parameterOrder="memberInfo encryptedPassword" >
+      <input message="LIB:addMemberRequest" />
+      <output message="LIB:emptyMessage" />
+    </operation>
+    <operation name="removeMember" >
+      <input message="LIB:removeMemberRequest" />
+      <output message="LIB:emptyMessage" />
+    </operation>
+  </portType>
+
+  <binding name="WalkIn" type="LIB:WalkIn" >
+    <soap:binding 
+      transport="http://schemas.xmlsoap.org/soap/http" 
+      style="rpc" 
+    />
+    <operation name="findTrueLove" >
+      <input>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </input>
+      <output>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </output>
+    </operation>
+    <operation name="sendLoveNote" >
+      <input>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </input>
+      <output>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </output>
+    </operation>
+  </binding>
+
+  <binding name="MembersOnly" type="LIB:MembersOnly" >
+    <soap:binding 
+      transport="http://schemas.xmlsoap.org/soap/http" 
+      style="rpc" 
+    />
+    <operation name="getLoveNotes" >
+      <input>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </input>
+      <output>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </output>
+    </operation>
+    <operation name="removeLoveNote" >
+      <input>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </input>
+      <output>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </output>
+    </operation>
+  </binding>
+
+  <binding name="Admin" type="LIB:Admin" >
+    <soap:binding 
+      transport="http://schemas.xmlsoap.org/soap/http" 
+      style="rpc" 
+    />
+    <operation name="getAllMembers" >
+      <input>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </input>
+      <output>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </output>
+    </operation>
+    <operation name="addMember" >
+      <input>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </input>
+      <output>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </output>
+    </operation>
+    <operation name="removeMember" >
+      <input>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </input>
+      <output>
+        <soap:body 
+          use="encoded" 
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+          namespace="http://modernlifestyle.com/LoveIsBlind" 
+        />
+      </output>
+    </operation>
+  </binding>
+
+  <service name="LoveIsBlind" >
+    <port name="WalkInImpl" binding="LIB:WalkIn" >
+      <soap:address location="http://absolutehost/LoveIsBlind/WalkIn" />
+    </port>
+    <port name="MembersOnlyImpl" binding="LIB:MembersOnly" >
+      <soap:address location="http://absolutehost/LoveIsBlind/MembersOnly" />
+    </port>
+    <port name="AdminImpl" binding="LIB:Admin" >
+      <soap:address location="http://absolutehost/LoveIsBlind/Admin" />
+    </port>
+  </service>
+
+</definitions>
+

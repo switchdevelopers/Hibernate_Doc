@@ -1,0 +1,1626 @@
+<!-- Mapping of classes used in junit tests -->
+<!-- @version $Id: repository_junit_reference.xml,v 1.1 2005/07/29 05:07:42 pavels Exp $ -->
+<!--
+/* Copyright 2003-2004 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+
+<!-- ************************************************* -->
+<!--      Reference test with extents                  -->
+<!-- ************************************************* -->
+
+<descriptor-repository version="1.0">
+
+    <class-descriptor class="org.apache.ojb.broker.ReferenceTest$ReferenceIF">
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$Reference" />
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceA" />
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceB" />
+    </class-descriptor>
+
+    <!--
+    first reference no extent, no proxy
+    second reference is extent, no proxy
+    third reference is extent, is proxy
+    -->
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$Repository"
+        table="REF_REPOSITORY">
+
+        <field-descriptor
+         name="repId"
+         column="REP_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="refId"
+         column="REF_FK"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="refAId"
+         column="REFA_FK"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="refBId"
+         column="REFB_FK"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="animalId"
+         column="ANIMAL_FK"
+         jdbc-type="INTEGER"
+        />
+
+        <reference-descriptor
+            name="ref"
+            class-ref="org.apache.ojb.broker.ReferenceTest$Reference"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="refId"/>
+        </reference-descriptor>
+
+        <reference-descriptor
+            name="refA"
+            class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceA"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="refAId"/>
+        </reference-descriptor>
+
+        <reference-descriptor
+            name="refB"
+            class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceB"
+            proxy="true"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="refBId"/>
+        </reference-descriptor>
+
+        <reference-descriptor
+            name="animal"
+            class-ref="org.apache.ojb.broker.ReferenceTest$Animal"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="animalId"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$RepositoryFK"
+        table="REF_REPOSITORY_FK">
+
+        <field-descriptor
+         name="repId"
+         column="REP_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="refId"
+         column="REF_FK"
+         primarykey="true"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="refAId"
+         column="REFA_FK"
+         primarykey="true"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="refBId"
+         column="REFB_FK"
+         primarykey="true"
+         jdbc-type="INTEGER"
+        />
+
+        <reference-descriptor
+            name="ref"
+            class-ref="org.apache.ojb.broker.ReferenceTest$Reference"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="refId"/>
+        </reference-descriptor>
+
+        <reference-descriptor
+            name="refA"
+            class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceA"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="refAId"/>
+        </reference-descriptor>
+
+        <reference-descriptor
+            name="refB"
+            class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceB"
+            proxy="true"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true">
+                <foreignkey field-ref="refBId"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+
+    <class-descriptor class="org.apache.ojb.broker.ReferenceTest$Animal">
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$Mammal" />
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$Bird" />
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$Fish" />
+    </class-descriptor>
+
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$Mammal"
+        table="REF_ANIMAL"
+    >
+        <field-descriptor
+         name="id"
+         column="A_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+      />
+
+        <field-descriptor
+         name="height"
+         column="LENGTH_"
+         jdbc-type="DOUBLE"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$Bird"
+        table="REF_ANIMAL"
+    >
+        <field-descriptor
+         name="id"
+         column="A_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="wingspan"
+         column="LENGTH_"
+         jdbc-type="DOUBLE"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$Fish"
+        table="REF_ANIMAL"
+    >
+        <field-descriptor
+         name="id"
+         column="A_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="length"
+         column="LENGTH_"
+         jdbc-type="DOUBLE"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$Reference"
+        table="REF_REFERENCE">
+
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceA" />
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$ReferenceB" />
+
+        <field-descriptor
+         name="refId"
+         column="REF_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="OJB_CONCRETE_CLASS"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$ReferenceA"
+        table="REF_REFERENCE">
+
+        <field-descriptor
+         name="refId"
+         column="REF_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="OJB_CONCRETE_CLASS"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="refNameA"
+         column="REF_NAME_A"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$ReferenceB"
+        table="REF_REFERENCE">
+
+        <field-descriptor
+         name="refId"
+         column="REF_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="OJB_CONCRETE_CLASS"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="refNameB"
+         column="REF_NAME_B"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$Wine"
+        table="REF_WINE">
+
+        <field-descriptor
+         name="id"
+         column="OBJ_ID"
+         jdbc-type="VARCHAR"
+         primarykey="true"
+         autoincrement="false"
+        />
+
+        <field-descriptor
+         name="grape"
+         column="GRAPE"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="year"
+         column="VINTAGE"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="regionName"
+         column="REGION_NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="regionCountry"
+         column="REGION_COUNTRY"
+         jdbc-type="VARCHAR"
+        />
+
+        <reference-descriptor
+            name="region"
+            class-ref="org.apache.ojb.broker.ReferenceTest$Region"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="regionName"/>
+                <foreignkey field-ref="regionCountry"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$Region"
+        table="REF_REGION">
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+         primarykey="true"
+         autoincrement="false"
+        />
+
+        <field-descriptor
+         name="country"
+         column="COUNTRY"
+         jdbc-type="VARCHAR"
+         primarykey="true"
+         autoincrement="false"
+        />
+
+        <field-descriptor
+         name="description"
+         column="DESCRIPTION"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <class-descriptor class="org.apache.ojb.broker.ReferenceTest$RefObject">
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$ObjA"/>
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$ObjB"/>
+        <extent-class class-ref="org.apache.ojb.broker.ReferenceTest$ObjC"/>
+
+        <field-descriptor
+             name="fkId"
+             column="FK_REF"
+             primarykey="false"
+             jdbc-type="INTEGER"
+            access="anonymous"
+        />
+
+        <reference-descriptor
+            name="ref"
+            class-ref="org.apache.ojb.broker.ReferenceTest$RefObject"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="false">
+                <foreignkey field-ref="fkId"/>
+        </reference-descriptor>
+
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$ObjA"
+        table="REF_OBJ_A">
+
+        <field-descriptor
+             name="id"
+             column="OBJ_ID"
+             jdbc-type="INTEGER"
+             primarykey="true"
+             autoincrement="true"
+        />
+
+        <field-descriptor
+             name="name"
+             column="NAME"
+             jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+             name="fkId"
+             column="FK_REF"
+             primarykey="false"
+             jdbc-type="INTEGER"
+            access="anonymous"
+        />
+
+        <reference-descriptor
+            name="ref"
+            class-ref="org.apache.ojb.broker.ReferenceTest$RefObject"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="false">
+                <foreignkey field-ref="fkId"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$ObjB"
+        table="REF_OBJ_B">
+
+        <field-descriptor
+             name="id"
+             column="OBJ_ID"
+             jdbc-type="INTEGER"
+             primarykey="true"
+             autoincrement="true"
+        />
+
+        <field-descriptor
+             name="name"
+             column="NAME"
+             jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+            name="fkId"
+            column="FK_REF"
+            primarykey="false"
+            jdbc-type="INTEGER"
+            access="anonymous"
+        />
+
+        <reference-descriptor
+            name="ref"
+            class-ref="org.apache.ojb.broker.ReferenceTest$RefObject"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="false">
+                <foreignkey field-ref="fkId"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.ReferenceTest$ObjC"
+        table="REF_OBJ_C">
+
+        <field-descriptor
+             name="id"
+             column="OBJ_ID"
+             jdbc-type="INTEGER"
+             primarykey="true"
+             autoincrement="true"
+        />
+
+        <field-descriptor
+             name="name"
+             column="NAME"
+             jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+             name="fkId"
+             column="FK_REF"
+             primarykey="false"
+             jdbc-type="INTEGER"
+             access="anonymous"
+        />
+
+        <reference-descriptor
+            name="ref"
+            class-ref="org.apache.ojb.broker.ReferenceTest$RefObject"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="false">
+                <foreignkey field-ref="fkId"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+
+<!-- ************************************************* -->
+<!--      PrimaryKeyForeignKeyTest - PB-api            -->
+<!-- ************************************************* -->
+    <class-descriptor
+        class="org.apache.ojb.broker.PrimaryKeyForeignKeyTest$Person"
+        table="PKFK_PERSON">
+
+        <field-descriptor
+             name="id"
+             column="OBJ_ID"
+             jdbc-type="INTEGER"
+             primarykey="true"
+             autoincrement="true"
+        />
+
+        <field-descriptor
+             name="name"
+             column="NAME"
+             jdbc-type="VARCHAR"
+        />
+
+        <reference-descriptor
+            name="detail"
+            class-ref="org.apache.ojb.broker.PrimaryKeyForeignKeyTest$PersonDetail"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="id"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.PrimaryKeyForeignKeyTest$PersonDetail"
+        table="PKFK_PERSON_DETAIL">
+
+        <field-descriptor
+             name="id"
+             column="OBJ_ID"
+             jdbc-type="INTEGER"
+             primarykey="true"
+             autoincrement="false"
+        />
+
+        <field-descriptor
+             name="profile"
+             column="PROFILE"
+             jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+             name="fkGender"
+             column="FK_GENDER"
+             jdbc-type="VARCHAR"
+             primarykey="false"
+             autoincrement="false"
+             access="anonymous"
+        />
+
+        <reference-descriptor
+            name="gender"
+            class-ref="org.apache.ojb.broker.PrimaryKeyForeignKeyTest$Gender"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="fkGender"/>
+        </reference-descriptor>
+
+        <reference-descriptor
+            name="person"
+            class-ref="org.apache.ojb.broker.PrimaryKeyForeignKeyTest$Person"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="id"/>
+        </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.PrimaryKeyForeignKeyTest$Gender"
+        table="PKFK_GENDER">
+
+        <field-descriptor
+             name="type"
+             column="TYPE"
+             jdbc-type="VARCHAR"
+             primarykey="true"
+             autoincrement="false"
+        />
+    </class-descriptor>
+
+
+
+
+<!-- ************************************************* -->
+<!--      PB collection test objects                   -->
+<!-- ************************************************* -->
+
+    <!--
+        private Integer gatId;
+        private String name;
+        private Collection collectiblesA;
+    -->
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$Gatherer"
+        table="COLLECTION_GATHERER">
+
+        <field-descriptor
+         name="gatId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+        name="collectionDummy"
+        element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleBase"
+        collection-class="org.apache.ojb.broker.CollectionTest$CollectionClassDummy"
+        auto-retrieve="true"
+        auto-update="true">
+            <orderby name="colId" sort="ASC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+     </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesBase"
+            element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleBase"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesB"
+            element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleB"
+            proxy="true"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="false"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesC"
+            element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleC"
+            proxy="true"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesCC"
+            element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleCC"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesC2"
+            element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleC2"
+            proxy="false"
+            auto-retrieve="false"
+            auto-update="true"
+            auto-delete="true"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesD"
+            element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleD"
+            proxy="false"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="collectiblesDD"
+            element-class-ref="org.apache.ojb.broker.CollectionTest$CollectibleDD"
+            proxy="true"
+            auto-retrieve="true"
+            auto-update="true"
+            auto-delete="true"
+        >
+            <orderby name="colId" sort="DESC"/>
+            <inverse-foreignkey field-ref="gathererId"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+    <!--
+        private Integer colId;
+        private String name;
+        private Integer gathererId;
+        private Gatherer gatherer;
+        private String extentName;
+    -->
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$CollectibleBase"
+        table="COLLECTION_COLLECTIBLE_BASE">
+        <!-- extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleB" / -->
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$CollectibleB"
+        table="COLLECTION_COLLECTIBLE_B">
+
+        <!-- extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleC" / -->
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$CollectibleC"
+        table="COLLECTION_COLLECTIBLE_C">
+        <!-- extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleCC" / -->
+        <!-- extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleC2" / -->
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="extentName"
+         column="EXTENT_NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <reference-descriptor
+            name="gatherer"
+            class-ref="org.apache.ojb.broker.CollectionTest$Gatherer"
+            proxy="false"
+            auto-retrieve="false"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="gathererId"/>
+        </reference-descriptor>
+
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$CollectibleCC"
+        table="COLLECTION_COLLECTIBLE_CC">
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="extentName"
+         column="EXTENT_NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <reference-descriptor
+            name="gatherer"
+            class-ref="org.apache.ojb.broker.CollectionTest$Gatherer"
+            proxy="false"
+            auto-retrieve="false"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="gathererId"/>
+        </reference-descriptor>
+
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$CollectibleC2"
+        table="COLLECTION_COLLECTIBLE_C2">
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+        <field-descriptor
+         name="extentName"
+         column="EXTENT_NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <reference-descriptor
+            name="gatherer"
+            class-ref="org.apache.ojb.broker.CollectionTest$Gatherer"
+            proxy="false"
+            auto-retrieve="false"
+            auto-update="false"
+            auto-delete="false">
+                <foreignkey field-ref="gathererId"/>
+        </reference-descriptor>
+
+    </class-descriptor>
+
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$CollectibleD"
+        table="COLLECTION_COLLECTIBLE_D">
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="OJB_CONCRETE_CLASS"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest$CollectibleDD"
+        table="COLLECTION_COLLECTIBLE_D">
+
+        <field-descriptor
+         name="colId"
+         column="COL_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="ojbConcreteClass"
+         column="OJB_CONCRETE_CLASS"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="gathererId"
+         column="GAT_ID"
+         jdbc-type="INTEGER"
+        />
+    </class-descriptor>
+
+    <class-descriptor class="org.apache.ojb.broker.CollectionTest$CollectibleBaseIF">
+      <extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleBase" />
+      <extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleB" />
+      <extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleC" />
+      <extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleD" />
+      <extent-class class-ref="org.apache.ojb.broker.CollectionTest$CollectibleDD" />
+   </class-descriptor>
+
+
+
+    <!-- ************************************************* -->
+    <!--      broker.CollectionTest                        -->
+    <!-- ************************************************* -->
+    <class-descriptor class="org.apache.ojb.broker.CollectionTest$BookShelfItem">
+       <extent-class class-ref="org.apache.ojb.broker.CollectionTest$Book"/>
+       <extent-class class-ref="org.apache.ojb.broker.CollectionTest$DVD"/>
+    </class-descriptor>
+
+    <class-descriptor
+       class="org.apache.ojb.broker.CollectionTest$BookShelf"
+       table="COL_BOOKSHELFS"
+    >
+       <field-descriptor
+          name="pk"
+          column="PK"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+       <field-descriptor
+          name="name"
+          column="NAME"
+          jdbc-type="VARCHAR"
+       />
+
+       <collection-descriptor
+          name="items"
+          element-class-ref="org.apache.ojb.broker.CollectionTest$BookShelfItem"
+          auto-retrieve="true"
+       >
+          <inverse-foreignkey field-ref="shelfFk"/>
+       </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+       class="org.apache.ojb.broker.CollectionTest$Book"
+       table="COL_BOOKS"
+    >
+       <field-descriptor
+          name="pk"
+          column="PK"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+
+      <field-descriptor
+          name="shelfFk"
+          column="BOOKSHELF_FK"
+          jdbc-type="INTEGER"
+          access="anonymous"
+       />
+       <reference-descriptor
+          name="shelf"
+          class-ref="org.apache.ojb.broker.CollectionTest$BookShelf"
+          auto-retrieve="true"
+          auto-update="false"
+          auto-delete="false"
+          proxy="true"
+       >
+          <foreignkey field-ref="shelfFk"/>
+       </reference-descriptor>
+
+    </class-descriptor>
+
+    <class-descriptor
+       class="org.apache.ojb.broker.CollectionTest$DVD"
+       table="COL_DVDS"
+    >
+       <field-descriptor
+          name="pk"
+          column="PK"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+
+      <field-descriptor
+          name="shelfFk"
+          column="BOOKSHELF_FK"
+          jdbc-type="INTEGER"
+          access="anonymous"
+       />
+       <reference-descriptor
+          name="shelf"
+          class-ref="org.apache.ojb.broker.CollectionTest$BookShelf"
+          auto-retrieve="true"
+          auto-update="false"
+          auto-delete="false"
+          proxy="true"
+       >
+          <foreignkey field-ref="shelfFk"/>
+       </reference-descriptor>
+
+    </class-descriptor>
+
+
+    <!-- ************************************************* -->
+    <!--      broker.MultithreadedReadTest                 -->
+    <!-- ************************************************* -->
+
+    <class-descriptor class="org.apache.ojb.broker.MultithreadedReadTest$Account">
+        <extent-class class-ref="org.apache.ojb.broker.MultithreadedReadTest$AccountImpl"/>
+    </class-descriptor>
+
+    <class-descriptor class="org.apache.ojb.broker.MultithreadedReadTest$Address">
+        <extent-class class-ref="org.apache.ojb.broker.MultithreadedReadTest$AddressImpl"/>
+    </class-descriptor>
+
+    <class-descriptor class="org.apache.ojb.broker.MultithreadedReadTest$Buyer">
+        <extent-class class-ref="org.apache.ojb.broker.MultithreadedReadTest$BuyerImpl"/>
+    </class-descriptor>
+
+    <class-descriptor class="org.apache.ojb.broker.MultithreadedReadTest$AddressType">
+        <extent-class class-ref="org.apache.ojb.broker.MultithreadedReadTest$AddressTypeImpl"/>
+    </class-descriptor>
+
+    <class-descriptor
+       class="org.apache.ojb.broker.MultithreadedReadTest$AccountImpl"
+       table="READTEST_ACCOUNT"
+        proxy="dynamic"
+    >
+       <field-descriptor
+          name="id"
+          column="OJB_ID"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+
+      <field-descriptor
+          name="name"
+          column="NAME"
+          jdbc-type="VARCHAR"
+       />
+
+        <field-descriptor
+          name="fk"
+          column="FK_REF"
+          jdbc-type="INTEGER"
+          access="anonymous"
+       />
+
+       <reference-descriptor
+          name="buyer"
+          class-ref="org.apache.ojb.broker.MultithreadedReadTest$Buyer"
+          auto-retrieve="true"
+          auto-update="true"
+          auto-delete="false"
+          proxy="false"
+       >
+          <foreignkey field-ref="fk"/>
+       </reference-descriptor>
+
+    </class-descriptor>
+
+    <class-descriptor
+       class="org.apache.ojb.broker.MultithreadedReadTest$BuyerImpl"
+       table="READTEST_BUYER"
+        proxy="dynamic"
+    >
+       <field-descriptor
+          name="id"
+          column="OJB_ID"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+
+      <field-descriptor
+          name="name"
+          column="NAME"
+          jdbc-type="VARCHAR"
+       />
+
+        <field-descriptor
+          name="fk"
+          column="FK_REF"
+          jdbc-type="INTEGER"
+          access="anonymous"
+       />
+
+       <reference-descriptor
+          name="address"
+          class-ref="org.apache.ojb.broker.MultithreadedReadTest$Address"
+          auto-retrieve="true"
+          auto-update="true"
+          auto-delete="false"
+          proxy="false"
+       >
+          <foreignkey field-ref="fk"/>
+       </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+       class="org.apache.ojb.broker.MultithreadedReadTest$AddressImpl"
+       table="READTEST_ADDRESS"
+        proxy="dynamic"
+    >
+       <field-descriptor
+          name="id"
+          column="OJB_ID"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+
+      <field-descriptor
+          name="name"
+          column="NAME"
+          jdbc-type="VARCHAR"
+       />
+
+        <field-descriptor
+          name="fk"
+          column="FK_REF"
+          jdbc-type="INTEGER"
+          access="anonymous"
+       />
+
+       <reference-descriptor
+          name="type"
+          class-ref="org.apache.ojb.broker.MultithreadedReadTest$AddressType"
+          auto-retrieve="true"
+          auto-update="true"
+          auto-delete="false"
+          proxy="false"
+       >
+          <foreignkey field-ref="fk"/>
+       </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+       class="org.apache.ojb.broker.MultithreadedReadTest$AddressTypeImpl"
+       table="READTEST_ADDRESS_TYPE"
+        proxy="dynamic"
+    >
+       <field-descriptor
+          name="id"
+          column="OJB_ID"
+          jdbc-type="INTEGER"
+          primarykey="true"
+          autoincrement="true"
+       />
+
+      <field-descriptor
+          name="name"
+          column="NAME"
+          jdbc-type="VARCHAR"
+       />
+    </class-descriptor>
+
+
+
+    <!-- ************************************************* -->
+    <!--     M2NTest classes                               -->
+    <!-- ************************************************* -->
+    <class-descriptor class="org.apache.ojb.broker.M2NTest$Movie">
+      <extent-class class-ref="org.apache.ojb.broker.M2NTest$MovieImpl" />
+    </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.broker.M2NTest$MovieImpl"
+   	  table="M2N_TEST_MOVIE"
+    >
+        <field-descriptor
+            name="idInt"
+            column="OBJ_ID_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="idInt2"
+            column="OBJ_ID2_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="idStr"
+            column="OBJ_ID_STR"
+            jdbc-type="VARCHAR"
+            primarykey="true"
+            autoincrement="false"
+        />
+
+        <field-descriptor
+            name="title"
+            column="TITLE"
+            jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+            name="description"
+            column="DESCRIPTION"
+            jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+            name="actors"
+            collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
+            element-class-ref="org.apache.ojb.broker.M2NTest$Actor"
+            auto-retrieve="false"
+            auto-update="false"
+            auto-delete="false"
+            indirection-table="M2N_TEST_ROLE"
+        >
+            <fk-pointing-to-this-class column="MOVIE_ID_INT"/>
+            <fk-pointing-to-this-class column="MOVIE_ID2_INT"/>
+            <fk-pointing-to-this-class column="MOVIE_ID_STR"/>
+            <fk-pointing-to-element-class column="ACTOR_ID"/>
+            <fk-pointing-to-element-class column="ACTOR_ID2"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.broker.M2NTest$Actor"
+   	  table="M2N_TEST_ACTOR"
+    >
+        <field-descriptor
+            name="id"
+            column="OBJ_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="id2"
+            column="OBJ_ID2"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="name"
+            column="NAME"
+            jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+            name="movies"
+            collection-class="org.apache.ojb.broker.M2NTest$MovieManageableCollection"
+            element-class-ref="org.apache.ojb.broker.M2NTest$MovieImpl"
+            auto-retrieve="false"
+            auto-update="false"
+            auto-delete="false"
+            indirection-table="M2N_TEST_ROLE"
+        >
+            <fk-pointing-to-this-class column="ACTOR_ID"/>
+            <fk-pointing-to-this-class column="ACTOR_ID2"/>
+            <fk-pointing-to-element-class column="MOVIE_ID_INT"/>
+            <fk-pointing-to-element-class column="MOVIE_ID2_INT"/>
+            <fk-pointing-to-element-class column="MOVIE_ID_STR"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+   	  class="org.apache.ojb.broker.M2NTest$Role"
+   	  table="M2N_TEST_ROLE"
+    >
+        <field-descriptor
+            name="actorId"
+            column="ACTOR_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+        />
+
+        <field-descriptor
+            name="actorId2"
+            column="ACTOR_ID2"
+            jdbc-type="INTEGER"
+            primarykey="true"
+        />
+
+        <field-descriptor
+            name="movieIntId"
+            column="MOVIE_ID_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="movieIntId2"
+            column="MOVIE_ID2_INT"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="movieStrId"
+            column="MOVIE_ID_STR"
+            jdbc-type="VARCHAR"
+            primarykey="true"
+        />
+    </class-descriptor>
+
+
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest2$Project"
+        table="COLLECTION_2_PROJECT"
+    >
+
+        <field-descriptor
+            name="id"
+            column="PRO_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="name"
+            column="NAME"
+            jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+            name="subProjects"
+            element-class-ref="org.apache.ojb.broker.CollectionTest2$SubProject"
+            proxy="false"
+            auto-retrieve="false"
+            auto-update="none"
+            auto-delete="none"
+        >
+            <inverse-foreignkey field-ref="projectId"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="developers"
+            element-class-ref="org.apache.ojb.broker.CollectionTest2$Developer"
+            proxy="false"
+            auto-retrieve="false"
+            auto-update="none"
+            auto-delete="none"
+        >
+            <inverse-foreignkey field-ref="projectId"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest2$SubProject"
+        table="COLLECTION_2_SUB_PROJECT"
+    >
+
+        <field-descriptor
+            name="id"
+            column="SUB_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="name"
+            column="NAME"
+            jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+          name="projectId"
+          column="FK_PRO_ID"
+          jdbc-type="INTEGER"
+          access="anonymous"
+       />
+
+       <reference-descriptor
+          name="project"
+          class-ref="org.apache.ojb.broker.CollectionTest2$Project"
+          auto-retrieve="false"
+          auto-update="none"
+          auto-delete="none"
+          proxy="false"
+       >
+          <foreignkey field-ref="projectId"/>
+       </reference-descriptor>
+    </class-descriptor>
+
+    <class-descriptor
+        class="org.apache.ojb.broker.CollectionTest2$Developer"
+        table="COLLECTION_2_DEVELOPER"
+    >
+
+        <field-descriptor
+            name="id"
+            column="DEV_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="name"
+            column="NAME"
+            jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+          name="projectId"
+          column="FK_PRO_ID"
+          jdbc-type="INTEGER"
+       />
+    </class-descriptor>
+
+
+    <!-- ************************************************* -->
+    <!--     M2NGraphTest                                  -->
+    <!-- ************************************************* -->
+    <class-descriptor
+        class="org.apache.ojb.broker.M2NGraphTest$Node"
+        table="M2N_NODE"
+    >
+
+        <field-descriptor
+            name="id"
+            column="OBJ_ID"
+            jdbc-type="INTEGER"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="name"
+            column="NAME"
+            jdbc-type="VARCHAR"
+        />
+
+        <collection-descriptor
+            name="children"
+            element-class-ref="org.apache.ojb.broker.M2NGraphTest$Node"
+            collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
+            indirection-table="M2N_KINDSHIP"
+            auto-retrieve="true"
+            auto-update="none"
+            auto-delete="none"
+        >
+            <fk-pointing-to-this-class column="PARENT_ID"/>
+            <fk-pointing-to-element-class column="CHILD_ID"/>
+        </collection-descriptor>
+
+        <collection-descriptor
+            name="parents"
+            element-class-ref="org.apache.ojb.broker.M2NGraphTest$Node"
+            collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList"
+            indirection-table="M2N_KINDSHIP"
+            auto-retrieve="true"
+            auto-update="none"
+            auto-delete="none"
+        >
+            <fk-pointing-to-this-class column="CHILD_ID"/>
+            <fk-pointing-to-element-class column="PARENT_ID"/>
+        </collection-descriptor>
+    </class-descriptor>
+
+<!-- Mapping of classes used in junit tests and tutorials ends here -->
+
+</descriptor-repository>

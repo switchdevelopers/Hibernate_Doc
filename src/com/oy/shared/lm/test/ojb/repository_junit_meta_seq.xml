@@ -1,0 +1,773 @@
+<descriptor-repository version="1.0">
+
+<!-- Mapping of classes used in junit tests -->
+<!-- @version $Id: repository_junit_meta_seq.xml,v 1.1 2005/07/29 05:07:42 pavels Exp $ -->
+<!--
+#/* Copyright 2003-2004 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<!-- ************************************************* -->
+<!--      START  -  Sequence manager test classes      -->
+<!-- ************************************************* -->
+
+    <!-- Definitions for org.apache.ojb.broker.Repository$SMInterface -->
+    <class-descriptor class="org.apache.ojb.broker.sequence.Repository$SMInterface">
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendA" />
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendB" />
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAA" />
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAAA" />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendA"
+      table="SM_TAB_A"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAA" />
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAB" />
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAB"
+      table="SM_TAB_AB"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAA"
+      table="SM_TAB_AA"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAAA" />
+
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAAA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendAAA"
+      table="SM_TAB_AAA"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendB"
+      table="SM_TAB_B"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendBB" />
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendBB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMInterfaceExtendBB"
+      table="SM_TAB_BB"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMSameTableA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMSameTableA"
+      table="SM_SAME_TAB"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMSameTableAA" />
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMSameTableAA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMSameTableAA"
+      table="SM_SAME_TAB"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMSameTableB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMSameTableB"
+      table="SM_SAME_TAB"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMSameTableBB" />
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMSameTableBB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMSameTableBB"
+      table="SM_SAME_TAB"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+
+
+    <!-- Definitions for org.apache.ojb.broker.Repository$SMMax -->
+    <class-descriptor class="org.apache.ojb.broker.sequence.Repository$SMMax">
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMMaxA" />
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMMaxB" />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMMaxA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMMaxA"
+      table="SM_TAB_MAX_A"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMMaxAA" />
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMMaxAB" />
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMMaxAB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMMaxAB"
+      table="SM_TAB_MAX_AB"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMMaxAA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMMaxAA"
+      table="SM_TAB_MAX_AA"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMMaxAAA" />
+
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMMaxAAA -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMMaxAAA"
+      table="SM_TAB_MAX_AAA"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMMaxB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMMaxB"
+      table="SM_TAB_MAX_B"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.Repository$SMMaxBB" />
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMMaxBB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMMaxBB"
+      table="SM_TAB_MAX_BB"
+    >
+        <field-descriptor
+         name="id"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMMaxBB -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMKey"
+      table="SM_KEY"
+    >
+        <field-descriptor
+         name="intKey"
+         column="INT_KEY"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+         name="stringKey"
+         column="STRING_KEY"
+         jdbc-type="VARCHAR"
+         primarykey="true"
+         autoincrement="true"
+         sequence-name="TEST_SEQUENCE"
+        />
+
+        <field-descriptor
+         name="longKey"
+         column="LONG_KEY"
+         jdbc-type="BIGINT"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="integerKey"
+         column="INTEGER_KEY"
+         jdbc-type="INTEGER"
+         primarykey="false"
+         autoincrement="true"
+        />
+    </class-descriptor>
+
+
+<!-- Definitions for org.apache.ojb.broker.sequence.Repository$SMDatabaseSequence -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.Repository$SMDatabaseSequence"
+      table="SM_TAB_DATABASE_SEQUENCE"
+    >
+        <field-descriptor
+         name="seqId"
+         column="SEQ_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+         sequence-name="TEST_SEQUENCE"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.SequenceManagerTest$AbstractSMObject"
+    >
+        <extent-class class-ref="org.apache.ojb.broker.sequence.SequenceManagerTest$SMObjectTwo" />
+        <extent-class class-ref="org.apache.ojb.broker.sequence.SequenceManagerTest$SMObjectOne" />
+    </class-descriptor>
+
+    <!-- NOTE: Here we use a table from other test -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.SequenceManagerTest$SMObjectOne"
+      table="SM_SAME_TAB"
+    >
+        <field-descriptor
+         name="objectId"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <!-- NOTE: Here we use a table from other test -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.SequenceManagerTest$SMObjectTwo"
+      table="SM_TAB_A"
+    >
+        <field-descriptor
+         name="objectId"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.SequenceManagerTest$SMAutoNaming"
+      table="SM_AUTO_NAMING"
+    >
+        <field-descriptor
+         name="objectId"
+         column="SM_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+    <!-- NOTE: This test class is specific for hsql, the database table was
+    generated at runtime
+    -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.NativeIdentifierTest$MainObject"
+      table="NATIVE_MAIN_OBJECT"
+    >
+        <field-descriptor
+        name="identifier"
+        column="NATIVE_ID"
+        jdbc-type="BIGINT"
+        primarykey="true"
+        autoincrement="true"
+        access="readonly"
+        />
+
+        <field-descriptor
+        name="refFK"
+        column="REF_ID"
+        jdbc-type="BIGINT"
+        access="anonymous"
+        />
+
+        <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+        />
+
+        <reference-descriptor
+        name="singleReference"
+        class-ref="org.apache.ojb.broker.sequence.NativeIdentifierTest$SingleReference"
+        proxy="false"
+        auto-retrieve="true"
+        auto-update="true"
+        auto-delete="true">
+            <foreignkey field-ref="refFK"/>
+      </reference-descriptor>
+
+        <collection-descriptor
+         name="allReferences"
+         element-class-ref="org.apache.ojb.broker.sequence.NativeIdentifierTest$CollectionReference"
+         auto-retrieve="true"
+         auto-update="true"
+         auto-delete="true"
+      >
+         <orderby name="refIdentifier" sort="DESC"/>
+         <inverse-foreignkey field-ref="fkIdentifier"/>
+      </collection-descriptor>
+    </class-descriptor>
+
+<!-- NOTE: This test class is specific for hsql, the database table was
+    generated at runtime
+    -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.NativeIdentifierTest$CollectionReference"
+      table="NATIVE_REFERENCE_OBJECT"
+    >
+        <field-descriptor
+        name="refIdentifier"
+        column="NATIVE_ID"
+        jdbc-type="BIGINT"
+        primarykey="true"
+        autoincrement="true"
+        access="readonly"
+        />
+
+        <field-descriptor
+        name="refName"
+        column="NAME"
+        jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+        name="fkIdentifier"
+        column="FK_ID"
+        jdbc-type="BIGINT"
+        />
+
+        <field-descriptor
+        name="singleRefFK"
+        column="SINGLE_REF_FK"
+        jdbc-type="BIGINT"
+        access="anonymous"
+        />
+
+        <reference-descriptor
+        name="singleReference"
+        class-ref="org.apache.ojb.broker.sequence.NativeIdentifierTest$SingleReference"
+        proxy="false"
+        auto-retrieve="true"
+        auto-update="true"
+        auto-delete="true">
+            <foreignkey field-ref="singleRefFK"/>
+      </reference-descriptor>
+    </class-descriptor>
+
+    <!-- NOTE: This test class is specific for hsql, the database table was
+    generated at runtime
+    -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.NativeIdentifierTest$SingleReference"
+      table="NATIVE_REFERENCE_OBJECT"
+    >
+        <field-descriptor
+        name="id"
+        column="NATIVE_ID"
+        jdbc-type="BIGINT"
+        primarykey="true"
+        autoincrement="true"
+        access="readonly"
+        />
+
+        <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+        name="refFK"
+        column="REF_ID"
+        jdbc-type="BIGINT"
+        access="anonymous"
+        />
+
+        <reference-descriptor
+        name="mainObject"
+        class-ref="org.apache.ojb.broker.sequence.NativeIdentifierTest$MainObject"
+        proxy="false"
+        auto-retrieve="false"
+        auto-update="true"
+        auto-delete="true">
+            <foreignkey field-ref="refFK"/>
+      </reference-descriptor>
+    </class-descriptor>
+
+
+<!-- ************************************************* -->
+<!--      multithreaded sequence manager test          -->
+<!-- ************************************************* -->
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.SMMultiThreadedTest$MTObjectA"
+      table="SM_MT_TEST_A"
+    >
+        <field-descriptor
+         name="objId"
+         column="OBJ_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+    <class-descriptor
+      class="org.apache.ojb.broker.sequence.SMMultiThreadedTest$MTObjectB"
+      table="SM_MT_TEST_B"
+    >
+        <field-descriptor
+         name="objId"
+         column="OBJ_ID"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+        />
+
+        <field-descriptor
+         name="name"
+         column="NAME"
+         jdbc-type="VARCHAR"
+        />
+    </class-descriptor>
+
+
+
+
+    <!-- ************************************************* -->
+    <!--      PB 'readonly' attribute tests                -->
+    <!-- ************************************************* -->
+    <!--
+    private Long objId;
+    private String name;
+    private String readonlyString;
+    private Long readonlyLong;
+    -->
+    <class-descriptor
+        class="org.apache.ojb.broker.metadata.ReadonlyTest$TestObject"
+        table="READONLY_TEST">
+
+        <field-descriptor
+            name="objId"
+            column="OBJ_ID"
+            jdbc-type="BIGINT"
+            primarykey="true"
+            autoincrement="true"
+        />
+
+        <field-descriptor
+            name="name"
+            column="NAME"
+            jdbc-type="VARCHAR"
+        />
+
+        <field-descriptor
+            name="readonlyString"
+            column="RO_STRING"
+            jdbc-type="VARCHAR"
+	        access="readonly"
+        />
+
+        <field-descriptor
+            name="readonlyLong"
+            column="RO_LONG"
+            jdbc-type="BIGINT"
+	        access="readonly"
+	     />
+
+    </class-descriptor>
+
+
+
+<!-- ************************************************* -->
+<!--      autoincrement test                           -->
+<!-- ************************************************* -->
+<class-descriptor
+    class="org.apache.ojb.broker.sequence.AutoIncrementTest$IncrementObject"
+    table="AUTO_INCREMENT">
+
+    <field-descriptor
+        name="intId"
+        column="INT_ID"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+
+    <field-descriptor
+        name="integerId"
+        column="INTEGER_ID"
+        jdbc-type="INTEGER"
+        autoincrement="true"
+    />
+
+    <field-descriptor
+        name="str"
+        column="STR_ID"
+        jdbc-type="VARCHAR"
+        autoincrement="true"
+    />
+</class-descriptor>
+
+<!-- Mapping of classes used in junit tests and tutorials ends here -->
+
+</descriptor-repository>

@@ -1,0 +1,104 @@
+<descriptor-repository version="1.0">
+
+    <class-descriptor class="com.oy.shared.query.bo.Query">
+      
+        <field-descriptor name="schemaClassName" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="name" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="description" jdbc-type="VARCHAR"/>					
+        <field-descriptor name="where" jdbc-type="VARCHAR"/>
+
+		<field-descriptor name="targetClassRef" jdbc-type="INTEGER"/>
+		<reference-descriptor name="targetClass" class-ref="com.oy.shared.query.bo.TargetClass"
+            auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+            <foreignkey field-ref="targetClassRef"/>
+        </reference-descriptor>
+        
+    </class-descriptor>    
+    
+    <class-descriptor class="com.oy.shared.query.bo.TargetClass">
+        
+		<field-descriptor name="className" jdbc-type="VARCHAR" column="CLASS_NAME_COLUMN"/>				
+		<field-descriptor name="alias" jdbc-type="VARCHAR" column="ALIAS_COLUMN"/>				
+		
+ 		<collection-descriptor name="relations" element-class-ref="com.oy.shared.query.bo.Relation"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="targetClassRef"/>
+        </collection-descriptor>
+        
+    </class-descriptor>        
+    
+    <class-descriptor class="com.oy.shared.query.bo.Relation">
+        
+    	<field-descriptor name="className" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="name" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="alias" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="inverse" jdbc-type="BOOLEAN"/>			
+		
+        <field-descriptor name="targetClassRef" jdbc-type="INTEGER"/>      
+        
+        <field-descriptor name="parentRelationRef" jdbc-type="INTEGER"/>      
+ 		<collection-descriptor name="childRelations" element-class-ref="com.oy.shared.query.bo.Relation"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="parentRelationRef"/>
+        </collection-descriptor>
+    </class-descriptor>            
+
+ 
+
+    <!-- query result set object declaration -->
+    
+    <class-descriptor class="com.oy.shared.query.bo.ResultTree">
+    
+        <field-descriptor name="queryRef" jdbc-type="INTEGER"/>
+		<reference-descriptor name="query" class-ref="com.oy.shared.query.bo.Query"
+            auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+            <foreignkey field-ref="queryRef"/>
+        </reference-descriptor>	
+        			
+		<collection-descriptor name="targetClassNodes" element-class-ref="com.oy.shared.query.bo.ResultNode"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="resultSetRef"/>
+        </collection-descriptor>      
+    </class-descriptor> 
+ 
+    <class-descriptor class="com.oy.shared.meta.BaseBO" moo-jav-external="true" moo-jav-abstract="true"/>
+
+    <class-descriptor class="com.oy.shared.query.bo.ResultNode">
+
+		<field-descriptor name="instanceId" jdbc-type="VARCHAR"/>				
+		<field-descriptor name="instanceVersion" jdbc-type="VARCHAR"/>			
+		
+		<field-descriptor name="instanceRef" jdbc-type="INTEGER"/>
+		<reference-descriptor name="instance" class-ref="com.oy.shared.meta.BaseBO"
+            auto-retrieve="true" auto-update="object" auto-delete="none" proxy="true">
+            <foreignkey field-ref="instanceRef"/> 
+        </reference-descriptor>
+
+	    <field-descriptor name="resultSetRef" jdbc-type="INTEGER"/>
+   	    <field-descriptor name="resultNodeGroupRef" jdbc-type="INTEGER"/>
+				
+ 		<collection-descriptor name="groups" element-class-ref="com.oy.shared.query.bo.ResultNodeGroup"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="parentNodeRef"/>
+        </collection-descriptor>
+        
+    </class-descriptor> 
+    
+    <class-descriptor class="com.oy.shared.query.bo.ResultNodeGroup">
+        
+	    <field-descriptor name="parentNodeRef" jdbc-type="INTEGER"/>      
+    
+	    <field-descriptor name="relationRef" jdbc-type="INTEGER"/>
+		<reference-descriptor name="relation" class-ref="com.oy.shared.query.bo.Relation"
+            auto-retrieve="true" auto-update="object" auto-delete="none" proxy="true">
+            <foreignkey field-ref="relationRef"/>
+        </reference-descriptor>	 
+        
+ 		<collection-descriptor name="groupNodes" element-class-ref="com.oy.shared.query.bo.ResultNode"
+			auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+			<inverse-foreignkey field-ref="resultNodeGroupRef"/>
+        </collection-descriptor>
+        
+    </class-descriptor>     
+    
+</descriptor-repository>

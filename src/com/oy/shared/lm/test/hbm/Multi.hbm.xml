@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+  <class dynamic-insert="true" dynamic-update="true" name="org.hibernate.test.legacy.Top" select-before-update="true" table="rootclass" where="id1_ is not null">
+    <!--cache-->
+    <id column="id1_" name="id" type="long" unsaved-value="0">
+      <generator class="native"/>
+    </id>
+    <version column="count_" name="count"/>
+    <property name="name"/>
+    <property name="address"/>
+    <property column="date_" name="date"/>
+    <many-to-one access="field" column="top_" name="top"/>
+    <joined-subclass name="org.hibernate.test.legacy.TrivialClass">
+      <key column="tcid"/>
+    </joined-subclass>
+    <joined-subclass dynamic-insert="true" dynamic-update="true" name="org.hibernate.test.legacy.Lower" table="leafsubclass">
+      <key column="id__"/>
+      <property name="intprop" not-null="true"/>
+      <one-to-one class="org.hibernate.test.legacy.Lower" name="other"/>
+      <many-to-one class="org.hibernate.test.legacy.Top" column="other1" name="another"/>
+      <many-to-one class="org.hibernate.test.legacy.Lower" column="other3" name="yetanother"/>
+      <property name="foo"/>
+      <set lazy="false" name="set">
+        <key column="parent"/>
+        <one-to-many class="org.hibernate.test.legacy.Top"/>
+      </set>
+      <bag lazy="true" name="bag" table="simple_simple">
+        <key column="simple1"/>
+        <many-to-many class="org.hibernate.test.legacy.Top" column="simple2"/>
+      </bag>
+      <one-to-one name="mypo"/>
+    </joined-subclass>
+    <joined-subclass name="org.hibernate.test.legacy.Multi" table="nonleafsubclass">
+      <key column="sid" on-delete="cascade"/>
+      <property column="dupe" name="extraProp"/>
+      <many-to-one class="org.hibernate.test.legacy.Multi" column="other2" name="other"/>
+      <many-to-one name="po"/>
+      <property formula="upper(dupe)" name="derived"/>
+      <component class="org.hibernate.test.legacy.Multi$Component" name="comp">
+        <property name="cal"/>
+        <property name="floaty"/>
+      </component>
+      <joined-subclass name="org.hibernate.test.legacy.SubMulti" table="leafsubsubclass">
+        <key column="sid"/>
+        <property column="dupe" name="amount"/>
+        <bag inverse="true" lazy="true" name="children">
+          <key column="parent"/>
+          <one-to-many class="org.hibernate.test.legacy.SubMulti"/>
+        </bag>
+        <many-to-one name="parent"/>
+        <list lazy="true" name="moreChildren">
+          <key column="another_parent"/>
+          <index column="list_ind"/>
+          <one-to-many class="org.hibernate.test.legacy.SubMulti"/>
+        </list>
+      </joined-subclass>
+    </joined-subclass>
+  </class>
+  <class dynamic-insert="true" name="org.hibernate.test.legacy.Po">
+    <id column="id_" type="long">
+      <generator class="native"/>
+    </id>
+    <property column="value_" name="value"/>
+    <list cascade="all" name="list">
+      <key column="list_po"/>
+      <index column="i"/>
+      <one-to-many class="org.hibernate.test.legacy.SubMulti"/>
+    </list>
+    <set cascade="all" inverse="true" name="set">
+      <key column="po"/>
+      <one-to-many class="org.hibernate.test.legacy.Multi"/>
+    </set>
+    <many-to-one column="tl" insert="false" name="top" update="false"/>
+    <many-to-one column="tl" name="lower"/>
+  </class>
+</hibernate-mapping>
